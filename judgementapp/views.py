@@ -1,10 +1,11 @@
 # Create your views here.
-import cStringIO as StringIO
+from io import StringIO
 from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template import Context, loader, RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
-from django.core.servers.basehttp import FileWrapper
+# from django.core.servers.basehttp import FileWrapper
+from django.shortcuts import render, get_object_or_404
+from wsgiref.util import FileWrapper
 
 from judgementapp.models import *
 
@@ -12,17 +13,15 @@ def index(request):
     queries = Query.objects.order_by('qId')
     output = ', '.join([q.text for q in queries])
 
-    template = loader.get_template('judgementapp/index.html')
-    context = Context({
-        'queries': queries,
-    })
-    return HttpResponse(template.render(context))
+    # template = loader.get_template('judgementapp/index.html')
+    context = {'queries': queries}
+    # return HttpResponse(template.render(request, context))
+    return render(request, 'judgementapp/index.html', context)
 
 def qrels(request):
     judgements = Judgement.objects.exclude(relevance=-1)
 
-
-    response = HttpResponse(judgements, mimetype='application/force-download')
+    response = HttpResponse(judgements, content_type='application/force-download')
     response['Content-Disposition'] = 'attachment; filename=qrels.txt'
     #response['X-Sendfile'] = myfile
     # It's usually a good idea to set the 'Content-Length' header too.
@@ -32,7 +31,8 @@ def qrels(request):
 def query_list(request):
     queries = Query.objects.order_by('qId')
 
-    return render_to_response('judgementapp/query_list.html', { 'queries': queries}, context_instance=RequestContext(request))
+    # return render('judgementapp/query_list.html', { 'queries': queries}, context_instance=RequestContext(request))
+    return render(request, 'judgementapp/query_list.html', {'queries': queries})
 
 def query(request, qId):
     query = Query.objects.get(qId=qId)
@@ -46,8 +46,8 @@ def query(request, qId):
 
     query.length = len(query.text)
 
-    return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements}, 
-        context_instance=RequestContext(request))
+    # return render('judgementapp/query.html', {'query': query, 'judgements': judgements}, context_instance=RequestContext(request))
+    return render(request, 'judgementapp/query.html', {'query': query, 'judgements': judgements})
 
 
 def document(request, qId, docId):
@@ -77,8 +77,12 @@ def document(request, qId, docId):
 
     content = document.get_content()
 
-    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement, 
-        'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
+    return render(request, 'judgementapp/document.html', 
+            {'document': document, 'query': query, 
+                'judgement': judgement, 'next': next, 'prev': prev, 
+                'rank': rank, 'total_rank': judgements.count(), 
+                'content': content.strip()
+            })
 
 def judge(request, qId, docId):
     query = get_object_or_404(Query, qId=qId)
@@ -93,7 +97,6 @@ def judge(request, qId, docId):
         judgement.comment = comment
     judgement.save()
 
-    
 
     next = None
     try:
@@ -120,8 +123,13 @@ def judge(request, qId, docId):
 
     content = document.get_content()
 
-    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement, 
-        'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
+    # return render(request, 'judgementapp/upload.html', context)
+    return render(request, 'judgementapp/document.html', 
+            {'document': document, 'query': query, 
+                'judgement': judgement, 'next': next, 'prev': prev, 
+                'rank': rank, 'total_rank': judgements.count(), 
+                'content': content.strip()
+            }) 
 
 
 def upload(request):
@@ -131,7 +139,7 @@ def upload(request):
 
         qryCount = 0
         for query in f:
-            qid, txt = query.split("\t", 1)
+            qid, txt = query.decode().strip().split("\t", 1)
             qryCount = qryCount + 1
             query = Query(qId=qid,text=txt)
             query.save()
@@ -142,7 +150,7 @@ def upload(request):
 
         docCount = 0
         for result in f:
-            qid, z, doc, rank, score, desc = result.split()
+            qid, z, doc, rank, score, desc = result.decode().strip().split()
             docCount = docCount + 1
             doc = doc.replace('corpus/', '')
             
@@ -161,11 +169,4 @@ def upload(request):
                 
         context['results'] = docCount
 
-    return render_to_response('judgementapp/upload.html', context)
-
-
-
-
-
-
-
+    return render(request, 'judgementapp/upload.html', context)

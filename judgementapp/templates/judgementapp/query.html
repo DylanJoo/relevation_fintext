@@ -3,7 +3,7 @@
 {% block content %}
 
 	<div class="well">
-        <h2> <span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.text }}</span> <a style="text-align: right;", href="{% url 'judgementapp.views.query_list' %}" class="btn">Back to Queries</a></h2>
+        <h2> <span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.text }}</span> <a style="text-align: right;", href="{% url 'query_list' %}" class="btn">Back to Queries</a></h2>
 	    <p></p>
     </div>
 
@@ -24,7 +24,7 @@
                   <tr>
                     <td>{{ query.qId }}</td>
                     <td>{{ forloop.counter }}</td>
-                    <td><a href="{% url 'judgementapp.views.document' qId=query.qId docId=judgement.document.docId %}">{{ judgement.document }}</a></td>
+                    <td><a href="{% url 'document' qId=query.qId docId=judgement.document.docId %}">{{ judgement.document.docId }}</a></td>
                     <td style="color: 
                       {% if judgement.relevance == -1 %} black {% endif %}
                       {% if judgement.relevance == 0 %} red {% endif %}
@@ -64,7 +64,7 @@
               
 
               <div class="form-actions">
-                  <button type="submit" class="btn btn-primary" size="20">Save</button> <a href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Cancel</a>
+                  <button type="submit" class="btn btn-primary" size="20">Save</button> <a href="{% url 'query' qId=query.qId %}" class="btn">Cancel</a>
               </div>
 
             </form>

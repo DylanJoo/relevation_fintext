@@ -1,62 +1,52 @@
 <!DOCTYPE html>
-{% load bootstrap_toolkit %}
 <html lang="en">
 <head>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
     <meta charset="utf-8">
     <title>relevation - Information Retrieval Relevance Judging System</title>
     <meta name="description" content="">
     <meta name="author" content="Bevan Koopman">
-    {% bootstrap_stylesheet_tag %}
-    <style type="text/css">
-        body {
-            padding-top: 60px;
-            font-size: 12px;
-        }
-        label, button, .btn {
-            font-size: 12px;
-        }
-        span.long {
-            font-weight: 200;
-            font-size: x-large;
-            line-height: 1.5em;
-        }
-    </style>
-    <!--[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    {% bootstrap_javascript_tag %}
-    {% block extra_head %}{% endblock %}
+    <meta name="author" content="Dylan J.-H. Ju">
+
+    {% block extra_head %}
+    {% endblock %}
 </head>
 
 <body>
-
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
         <div class="container">
-            <a class="brand" href="{% url 'judgementapp.views.index' %}">relevation</a>
-            <ul class="nav">
-                <li><a href="{% url 'judgementapp.views.index' %}" class="">Home</a></li>
-                <li><a href="{% url 'judgementapp.views.index' %}upload">Setup</a></li>
-                <li class="dropdown">
-                    <ul class="dropdown-menu">
-                        <li><a class="nav" href="?layout=vertical">Vertical</a></li>
-                        <li><a href="?layout=horizontal">Horizontal</a></li>
-                        <li><a href="?layout=inline">Inline</a></li>
-                        <li><a href="?layout=search">Search</a></li>
-                        <li><a href="?layout=horizontal">Using template</a></li>
+            {# <a class="navbar-brand" href="{% url 'index' %}">Relevation</a> #}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'index' %}upload">Setup</a>
+                </li>
+                <li><a class="nav-link active" href="{% url 'index' %}about">About</a></li>
+                <li><a class="nav-link active" href="{% url 'query_list' %}">Queries</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Others
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="?layout=vertical">Vertical</a></li>
+                        <li><a class="dropdown-item" href="?layout=horizontal">Horizontal</a></li>
+                        <li><a class="dropdown-item" href="?layout=inline">Inline</a></li>
+                        <li><a class="dropdown-item" href="?layout=search">Search</a></li>
+                        <li><a class="dropdown-item" href="?layout=horizontal">Using template</a></li>
                     </ul>
                 </li>
-                <li><a href="{% url 'judgementapp.views.index' %}about">About</a></li>
-                <li><a href="{% url 'judgementapp.views.query_list' %}">Queries</a></li>
             </ul>
         </div>
     </div>
-</div>
+</nav>
 
 <div class="container">
-
-    {% bootstrap_messages %}
 
     {% block content %}Empty page{% endblock %}
 

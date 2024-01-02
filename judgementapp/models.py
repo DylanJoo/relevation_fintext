@@ -2,13 +2,11 @@ from django.conf import settings
 from django.db import models
 
 # Create your models here.
-
-
 class Document(models.Model):
 	docId = models.CharField(max_length=250)
 	text = models.TextField()
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.docId
 
 	def get_content(self):
@@ -30,7 +28,7 @@ class Query(models.Model):
 	criteria = models.TextField(blank=True, null=True)
 	example = models.TextField(blank=True, null=True)
 
-	def __unicode__(self):
+	def __str__(self):
 		return '%s: %s' % (self.qId, self.text)
 
 	def num_unjudged_docs(self):
@@ -47,15 +45,13 @@ class Judgement(models.Model):
 
 	labels = {-1: 'Unjudged', 0: 'Not relvant', 1: 'Somewhat relevant', 2:'Highly relevant'}
 
-	query = models.ForeignKey(Query)
-	document = models.ForeignKey(Document)
+	query = models.ForeignKey('Query', on_delete=models.CASCADE)
+	document = models.ForeignKey('Document', on_delete=models.CASCADE)
 	comment = models.TextField(blank=True, null=True)
-
 	relevance = models.IntegerField()
 
-	def __unicode__(self):
+	def __str__(self):
 		return '%s Q0 %s %s\n' % (self.query.qId, self.document.docId, self.relevance)
-
 
 	def label(self):
 		return self.labels[self.relevance]

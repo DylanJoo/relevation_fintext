@@ -25,7 +25,7 @@
                   
                 <tr>
                     <td>{{ query.qId }} </td>
-                    <td><a href="{% url 'judgementapp.views.query' qId=query.qId%}">{{ query.text }}</a></td>
+                    <td><a href="{% url 'query' qId=query.qId%}">{{ query.text }}</a></td>
                     <td>{{ query.num_judgements }}</td>
                     <td {% if query.num_unjudged_docs > 0 %} style="color: red" {% endif %}>{{ query.num_unjudged_docs }}</td>
                   </tr>
@@ -36,7 +36,7 @@
             </table>
 
             {% if queries %}
-              <a href="{% url 'judgementapp.views.qrels' %}" class="btn"><i class="icon-download"></i> Download Relevance Assessments (qrels)</a>
+              <a href="{% url 'qrels' %}" class="btn"><i class="icon-download"></i> Download Relevance Assessments (qrels)</a>
             {% endif %}
         </div>
         

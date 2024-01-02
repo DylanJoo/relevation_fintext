@@ -1,6 +1,7 @@
 from math import floor
 from django.forms import BaseForm
-from django.forms.forms import BoundField
+# from django.forms.forms import BoundField
+from django.forms import BoundField
 from django.forms.widgets import TextInput, CheckboxInput, CheckboxSelectMultiple, RadioSelect
 from django.template import Context
 from django.template.loader import get_template
@@ -80,19 +81,19 @@ def as_bootstrap(form_or_field, layout='vertical,false'):
 
     if isinstance(form_or_field, BaseForm):
         return get_template("bootstrap_toolkit/form.html").render(
-            Context({
+            {
                 'form': form_or_field,
                 'layout': layout,
                 'float': float,
-            })
+            }
         )
     elif isinstance(form_or_field, BoundField):
         return get_template("bootstrap_toolkit/field.html").render(
-            Context({
+            {
                 'field': form_or_field,
                 'layout': layout,
                 'float': float,
-            })
+            }
         )
     else:
         # Display the default
@@ -190,7 +191,7 @@ def pagination(page, pages_to_show=11):
     for i in range(first_page, last_page + 1):
         pages_shown.append(i)
     return get_template("bootstrap_toolkit/pagination.html").render(
-        Context({
+        {
             'num_pages': num_pages,
             'current_page': current_page,
             'first_page': first_page,
@@ -198,7 +199,7 @@ def pagination(page, pages_to_show=11):
             'pages_shown': pages_shown,
             'pages_back': pages_back,
             'pages_forward': pages_forward,
-        })
+        }
     )
 
 @register.filter

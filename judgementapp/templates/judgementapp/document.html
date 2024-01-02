@@ -8,7 +8,7 @@
 
 	   <div class="well">
 
-        <h2><span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.text }}</span> <a style="text-align: right;", href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Back to Query</a></h2>
+        <h2><span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.text }}</span> <a style="text-align: right;", href="{% url 'query' qId=query.qId %}" class="btn">Back to Query</a></h2>
         
         
     </div>
@@ -17,7 +17,7 @@
       
       <div class="span3">
       {% if prev %}
-        <a href="{% url 'judgementapp.views.document' qId=query.qId docId=prev.document.docId %}" class="btn">Prev Document</a>
+        <a href="{% url 'document' qId=query.qId docId=prev.document.docId %}" class="btn">Prev Document</a>
       {% endif %}
       </div>
 
@@ -25,7 +25,7 @@
 
       <div class="span3" align="right">
       {% if next %}
-        <a href="{% url 'judgementapp.views.document' qId=query.qId docId=next.document.docId %}" class="btn">Next Document</a>
+        <a href="{% url 'document' qId=query.qId docId=next.document.docId %}" class="btn">Next Document</a>
       {% endif %}
       </div>
 
@@ -83,7 +83,7 @@
     </script>
 
         <div class="span3">
-            <form class="form-inline" action="{% url 'judgementapp.views.judge' qId=query.qId docId=document.docId %}" method="post">
+            <form class="form-inline" action="{% url 'judge' qId=query.qId docId=document.docId %}" method="post">
                 {% csrf_token %}
 
                 {% if query.criteria %}
