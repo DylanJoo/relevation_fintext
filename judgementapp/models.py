@@ -33,7 +33,7 @@ class Query(models.Model):
 	qId = models.CharField(max_length=100)
 	text = models.CharField(max_length=250)
 	category = models.JSONField(default=default_query_categories)
-	comment = models.TextField(blank=True, null=True)
+	comment = models.TextField(default="", null=True)
 
 	instructions = models.TextField(blank=True, null=True)
 	criteria = models.TextField(blank=True, null=True)
@@ -58,7 +58,7 @@ class Judgement(models.Model):
 
 	query = models.ForeignKey(Query, on_delete=models.CASCADE)
 	document = models.ForeignKey(Document, on_delete=models.CASCADE)
-	comment = models.TextField(blank=True, null=True)
+	comment = models.TextField(default="", null=True)
 	relevance = models.IntegerField()
 
 	def __str__(self):

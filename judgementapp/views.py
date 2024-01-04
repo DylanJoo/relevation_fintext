@@ -44,14 +44,16 @@ def query(request, qId):
                 query.category[c] = 1
             else:
                 query.category[c] = 0
+    else:
+        for c in query.category:
+            query.category[c] = 0
 
-        if "comment" in request.POST:
-            query.comment = request.POST['comment']
-        query.save()
+    if "comment" in request.POST:
+        query.comment = request.POST['comment'].strip()
 
+    query.save()
     query.length = len(query.text)
 
-    # return render('judgementapp/query.html', {'query': query, 'judgements': judgements}, context_instance=RequestContext(request))
     return render(request, 'judgementapp/query.html', {'query': query, 'judgements': judgements})
 
 
@@ -93,13 +95,15 @@ def judge(request, qId, docId):
     query = get_object_or_404(Query, qId=qId)
     document = get_object_or_404(Document, docId=docId)
     relevance = request.POST['relevance']
-    comment = request.POST['comment']
+    comment = request.POST['comment'].strip()
 
     judgements = Judgement.objects.filter(query=query.id)
     judgement, created = Judgement.objects.get_or_create(query=query.id, document=document.id)
     judgement.relevance = int(relevance)
-    if comment != 'Comment':
-        judgement.comment = comment
+    # if comment != '':
+    #     judgement.comment = comment
+    judgement.comment = comment
+    # print(judgement.comment)
     judgement.save()
 
 

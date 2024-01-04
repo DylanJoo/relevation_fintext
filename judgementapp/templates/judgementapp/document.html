@@ -92,13 +92,12 @@
 
                   function captureSelection() {
                     textarea = document.getElementById('comment');
-                    if (textarea.value=='Comments') {
-                      textarea.value = '';
+                    {# if (textarea.value=='Comments') { #}
+                    if (textarea.value.length == 0) {
+                      textarea.value = getSelectedText();
+                    } else if (textarea.value.length > 0) {
+                      textarea.value = textarea.value + ' ||| ' + getSelectedText();
                     }
-                    if (textarea.value.length > 0) {
-                      textarea.value = textarea.value + '\n';
-                    }
-                    textarea.value = textarea.value + '"' + getSelectedText() + '"';
                   }
 
                   // Keyboard shortcuts for faster judging.
@@ -117,12 +116,11 @@
                 </script>
 
                 <h6>The Rationale of relevant reference. </h6>
-                <p>how you select this document (reference) as relevant? Use
-                <button type="button" class="btn btn-warning btn-sm" id="capture" onclick="captureSelection()">highlighter</button>
+                <p>how you select this document (reference) as relevant? Type or
+                <button type="button" class="btn btn-warning btn-sm" id="capture" onclick="captureSelection()">highlight</button>
                  <div class="control-group">
                     <div class="controls">
-                      <textarea style="width:100%" id="comment" name="comment">
-                          {% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea>
+                      <textarea style="width:100%" id="comment" name="comment">{% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea>
                     </div>
                   </div>
             </div>

@@ -21,13 +21,12 @@
         <div class="col"><h6>Year: </h6></div>
     </div>
 
+    <form class="form-inline" action="" method="post"> {% csrf_token %}
     <div class="card-body row">
         <div class="col">
             <h6>{{ query.text }} </h6>
         </div>
         <div class="col-2 float-right"> 
-           <form class="form-inline" action="" method="post">
-              {% csrf_token %}
               <div class="form-check">
                   <input class="form-check-input" type="checkbox" name="category" id="category2" value="2" 
                   {% if query.category.2 == 1%} checked {% endif %}>
@@ -45,14 +44,47 @@
                      <h6>category 0</h6>
                  </label>
               </div>
-              <div class="form-actions">
-                  <button type="submit" class="btn btn-outline-primary btn-sm">Save</button> 
-                  <a href="{% url 'query' qId=query.qId %}" class="btn btn-outline-danger btn-sm">Cancel</a>
-              </div>
-              {# <a style="text-align: right;", href="{% url 'query_list' %}" class="btn btn-outline-dark">Back to Queries</a></h5> #}
-           </form>
         </div>
     </div>
+
+    <div class="card-body row">
+        <div class="col">
+            <div><script type="text/javascript">
+              function getSelectedText() {
+                  if (window.getSelection) {
+                      return window.getSelection().toString();
+                  } else if (document.selection) {
+                      return document.selection.createRange().text;
+                  }
+                  return '';
+              }
+
+              function captureSelection() {
+                textarea = document.getElementById('comment');
+                if (textarea.value.length == '') {
+                  textarea.value = getSelectedText() ;
+                } else if (textarea.value.length > 0) {
+                  textarea.value = textarea.value + ' ||| ' + getSelectedText() ;
+                }
+              }
+            </script></div>
+
+            <h6><button type="button" class="btn btn-warning btn-sm" id="capture" onclick="captureSelection()">Span highlighter</button></h6>
+            <div class="control-group">
+                {# <div class="controls"> #}
+                <textarea style="width:100%" id="comment" name="comment">{% if query.comment %}{{query.comment}}{% else %}{% endif %}</textarea>
+                {# </div> #}
+            </div>
+        </div>
+        <div class="col-2 float-right"> 
+            <div class="form-actions">
+                <button type="submit" class="btn btn-outline-primary btn-sm">Save</button> 
+                <a href="{% url 'query' qId=query.qId %}" class="btn btn-outline-danger btn-sm">Cancel</a>
+            </div>
+        </div>
+    </div>
+    </form>
+
 </div>
 
 <div class="table-responsive m-2">
@@ -80,10 +112,3 @@
 </div>
 {% endblock %}
 
-
-{# <label>Comments:</comments> #}
-{# <div class="control-group"> #}
-{# <div class="controls"> #}
-{# <textarea rows="3" placehoder="comment" name="comment" class="span6" >{% if query.comment %}{{ query.comment }}{% else %}{% endif %}</textarea> #}
-{# </div> #}
-{# </div> #}
