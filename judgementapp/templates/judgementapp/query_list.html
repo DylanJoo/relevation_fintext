@@ -2,45 +2,37 @@
 
 {% block content %}
 
-	<div class="well">
-        <h2>Queries</h2>
-	    <p></p>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Queries</h5>
+    <p class="card-text">A placeholder for query list.</p>
     </div>
-
-	<div class="row">
-
-        <div class="span12">
-        	<table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>QueryId</th>
-                  <th>Text</th>
-                  <th>Number of documents</th>
-                  <th>Number unjudged</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {% for query in queries %}
-                  
-                <tr>
-                    <td>{{ query.qId }} </td>
-                    <td><a href="{% url 'query' qId=query.qId%}">{{ query.text }}</a></td>
-                    <td>{{ query.num_judgements }}</td>
-                    <td {% if query.num_unjudged_docs > 0 %} style="color: red" {% endif %}>{{ query.num_unjudged_docs }}</td>
-                  </tr>
-                {% endfor %}
-                
-        
-              </tbody>
-            </table>
-
-            {% if queries %}
-              <a href="{% url 'qrels' %}" class="btn"><i class="icon-download"></i> Download Relevance Assessments (qrels)</a>
-            {% endif %}
-        </div>
-        
+    <div class="card-body">
+        {% if queries %}
+        <a href="{% url 'query_list' %}" class="btn btn-outline-dark">Download Relevance Assessments (qrels) &raquo;</a>
+        {% endif %}
     </div>
+</div>
 
+<div class="table-responsive">
+    <table class="table table-striped">
+    <thead style="table-layout:fixed">
+        <tr><th style="width: 20%">Id</th>
+            <th>Text</th>
+            <th style="width: 10%"># Docs</th>
+            <th style="width: 10%"># Unjudged</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for query in queries %}
+        <tr><td>{{ query.qId }} </td>
+            <td><a href="{% url 'query' qId=query.qId%}">{{ query.text }}</a></td>
+            <td>{{ query.num_judgements }}</td>
+            <td {% if query.num_unjudged_docs > 0 %} style="color: red" {% endif %}>{{ query.num_unjudged_docs }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
 
 {% endblock %}

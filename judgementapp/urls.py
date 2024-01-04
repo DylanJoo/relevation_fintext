@@ -11,9 +11,9 @@ urlpatterns = [
     re_path(r'^query/(?P<qId>[A-Za-z0-9_\-\+\.]+)/$', views.query, name='query'),
     re_path(r'^query/(?P<qId>[A-Za-z0-9_\-\+\.]+)/doc/(?P<docId>[A-Za-z0-9_\-\+\.]+)/$', views.document, name='document'),
 	re_path(r'^query/(?P<qId>[A-Za-z0-9_\-\+\.]+)/doc/(?P<docId>[+A-Za-z0-9_\-\+\.]+)/judge/$', views.judge, name='judge'),    
-    # re_path(r'^about/$', TemplateView.as_view(template_name='judgementapp/about.html')),
     re_path(r'^upload/$', TemplateView.as_view(template_name='judgementapp/upload.html')),
 	re_path(r'^upload/save$', views.upload, name='upload'),        
 	re_path(r'^upload/delete$', views.delete, name='delete'),        
 	re_path(r'^upload/reset$', views.reset, name='reset'),        
 ]
+    # re_path(r'^about/$', TemplateView.as_view(template_name='judgementapp/about.html')),
