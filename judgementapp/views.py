@@ -98,7 +98,6 @@ def judge(request, qId, docId):
     judgements = Judgement.objects.filter(query=query.id)
     judgement, created = Judgement.objects.get_or_create(query=query.id, document=document.id)
     judgement.relevance = int(relevance)
-    print(judgement)
     if comment != 'Comment':
         judgement.comment = comment
     judgement.save()

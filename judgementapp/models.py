@@ -1,3 +1,4 @@
+import json
 from django.conf import settings
 from django.db import models
 
@@ -13,7 +14,12 @@ class Document(models.Model):
 		content = ""
 		try:
 			with open(settings.DATA_DIR+"/"+self.docId) as f:
-				content = f.read()
+			    read = f.read()
+			    try:
+			        self.text = json.loads(read)['metadata']
+			        content += json.loads(read)['contents']
+			    except:
+			        content += read
 		except Exception:
 			content = "Could not read file %s" % settings.DATA_DIR+"/"+self.docId
 		return content
