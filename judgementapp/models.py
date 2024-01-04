@@ -18,11 +18,15 @@ class Document(models.Model):
 			content = "Could not read file %s" % settings.DATA_DIR+"/"+self.docId
 		return content
 
+
+def default_query_categories():
+    return {str(i): 0 for i in range(10)}
+
 class Query(models.Model):
 	# qId = models.IntegerField()
 	qId = models.CharField(max_length=100)
 	text = models.CharField(max_length=250)
-	difficulty = models.IntegerField(blank=True, null=True)
+	difficulty = models.JSONField(default=default_query_categories)
 	comment = models.TextField(blank=True, null=True)
 
 	instructions = models.TextField(blank=True, null=True)

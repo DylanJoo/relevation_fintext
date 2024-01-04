@@ -39,7 +39,12 @@ def query(request, qId):
     judgements = Judgement.objects.filter(query=query.id)
 
     if "difficulty" in request.POST:
-        query.difficulty = int(request.POST['difficulty'])
+        for c in query.difficulty:
+            if c in request.POST.getlist('difficulty'):
+                query.difficulty[c] = 1
+            else:
+                query.difficulty[c] = 0
+
         if "comment" in request.POST:
             query.comment = request.POST['comment']
         query.save()
@@ -93,6 +98,7 @@ def judge(request, qId, docId):
     judgements = Judgement.objects.filter(query=query.id)
     judgement, created = Judgement.objects.get_or_create(query=query.id, document=document.id)
     judgement.relevance = int(relevance)
+    print(judgement)
     if comment != 'Comment':
         judgement.comment = comment
     judgement.save()
@@ -155,7 +161,6 @@ def delete(request):
 def upload(request):
     context = {}
 
-    print(request)
     if 'queryFile' in request.FILES:
         f = request.FILES['queryFile']
         qryCount = 0

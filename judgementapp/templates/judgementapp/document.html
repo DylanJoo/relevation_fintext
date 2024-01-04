@@ -1,138 +1,177 @@
 {% extends "judgementapp/base.html" %}
 
 {% block content %}
+<div class="card">
 
-    
-    
+<div class="card-body">
+    <h5 class="card-title">Query-document Judgements</h5>
+    <p class="card-text">Here is the guideline.</p>
+    <p>
+    {put the labeling guideline here.}
+    {put the labeling guideline here.}
+    {put the labeling guideline here.}
+    </p>
+</div>
 
-
-	   <div class="well">
-
-        <h2><span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.text }}</span> <a style="text-align: right;", href="{% url 'query' qId=query.qId %}" class="btn">Back to Query</a></h2>
-        
-        
+<div class="card text-left m-2">
+    <div class="row card-body">
+        <div class="col"><h6>QueryID: {{query.qId}} </h6></div>
+        <div class="col"><h6>Company: </h6></div>
+        <div class="col"><h6>Year: </h6></div>
     </div>
 
-    <div class="row">
-      
-      <div class="span3">
-      {% if prev %}
-        <a href="{% url 'document' qId=query.qId docId=prev.document.docId %}" class="btn">Prev Document</a>
-      {% endif %}
-      </div>
-
-      <div class="span6"><h3 style="text-align: center;">Document "{{ document.docId }}" ({{ rank }} / {{total_rank}}) </h3></div>
-
-      <div class="span3" align="right">
-      {% if next %}
-        <a href="{% url 'document' qId=query.qId docId=next.document.docId %}" class="btn">Next Document</a>
-      {% endif %}
-      </div>
-
+    <div class="card-body row">
+        <div class="col">
+            <h6>{{ query.text }} </h6>
+        </div>
+        {# <div class="col-2 float-right">  #}
+        {#    <form class="form-inline" action="" method="post"> #}
+        {#       {% csrf_token %} #}
+        {#       <div class="form-check"> #}
+        {#           <input class="form-check-input" type="checkbox" name="difficulty" id="difficulty2" value="2"  #}
+        {#           {% if query.difficulty == 2 %} checked {% endif %}> #}
+        {#          <label class="form-check-label" for="defaultCheck1"> #}
+        {#              <h6>category 2</h6> #}
+        {#          </label> #}
+        {#       </div> #}
+        {#       <div class="form-check"> #}
+        {#           <input class="form-check-input" type="checkbox" name="difficulty" id="difficulty1" value="1" #}
+        {#          {% if query.difficulty == 1 %} checked {% endif %}> #}
+        {#          <label class="form-check-label" for="defaultCheck1"> #}
+        {#              <h6>category 1</h6> #}
+        {#          </label> #}
+        {#       </div> #}
+        {#       <div class="form-check"> #}
+        {#           <input class="form-check-input" type="checkbox" name="difficulty" id="difficulty2" value="0" #}
+        {#          {% if query.difficulty == 0 %} checked {% endif %}> #}
+        {#          <label class="form-check-label" for="defaultCheck1"> #}
+        {#              <h6>category 0</h6> #}
+        {#          </label> #}
+        {#       </div> #}
+        {#       <div class="form-actions"> #}
+        {#           <button type="submit" class="btn btn-outline-primary btn-sm">Save</button>  #}
+        {#           <a href="{% url 'query' qId=query.qId %}" class="btn btn-outline-danger btn-sm">Cancel</a> #}
+        {#       </div> #}
+        {#    </form> #}
+        {# </div> #}
     </div>
+</div>
 
-
-	<div class="row">
-        
-        <div class="span9", style="height:750px; position:relative; overflow-y: scroll;" id='content'>
+<div class="card text-left m-2">
+    <div class="row card-body">
+        <h6>DocumentID: {{ document.docId }} ({{ rank }} out of {{total_rank}}) </h6>
+    </div>
+    <div class="card-body row">
+        <div class="col">
+            <h6>{{ document.text }} </h6>
+        </div>
+        <div style="height:100; position:relative; overflow-y: scroll;" id='content'>
           <pre>{{ content }}</pre>
         </div>
-      
-        
-        <script type="text/javascript">
-          // $('div#content').mouseup(function() {
-          //     document.getElementById("comment").value = getSelectedText();
-          // });
-
-          function getSelectedText() {
-              if (window.getSelection) {
-                  return window.getSelection().toString();
-              } else if (document.selection) {
-                  return document.selection.createRange().text;
-              }
-              return '';
-          }
-
-          function captureSelection() {
-            textarea = document.getElementById('comment');
-            if (textarea.value=='Comments') {
-              textarea.value = '';
-            }
-            if (textarea.value.length > 0) {
-              textarea.value = textarea.value + '\n';
-            }
-            textarea.value = textarea.value + '"' + getSelectedText() + '"';
-          }
-
-          // Keyboard shortcuts for faster judging.
-          document.addEventListener("DOMContentLoaded", function() {
-              let btn = {% if next %} document.getElementById("btn-next") {% else %} document.getElementById("btn-save") {% endif %}
-              let els = document.querySelectorAll("#relevance-labels > label > input");
-              document.onkeypress = function (e) {
-                  e = e || window.event;
-                  value = e.keyCode - 49
-                  if (value >= 0 && value < els.length) {
-                      els[value].checked = 1
-                      btn.click();
-                  }
-              };
-          });
-
-
-
-    </script>
-
-        <div class="span3">
-            <form class="form-inline" action="{% url 'judge' qId=query.qId docId=document.docId %}" method="post">
-                {% csrf_token %}
-
-                {% if query.criteria %}
-                  <legend>Query Description</legend>
-                  Criteria: {{ query.criteria }}
-                {% endif %}
-
-                <legend>Judgement</legend>
-                <div class="control-group" id="relevance-labels">
-                    <label class="radio">
-                      <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
-                      Unjudged
-                    </label><br>
-                    <label class="radio">
-                     <input type="radio" name="relevance" id="relevance2" value="2" {% if judgement.relevance == 2 %} checked {% endif %}>
-                      Highly relevant
-                    </label><br>
-                    <label class="radio">
-                      <input type="radio" name="relevance" id="relevance1" value="1" {% if judgement.relevance == 1 %} checked {% endif %}>
-                      Somewhat relevant
-                    </label><br>
-                    <label class="radio">
-                      <input type="radio" name="relevance" id="relevance0" value="0" {% if judgement.relevance == 0 %} checked {% endif %}>
-                      Not relevant
-                    </label>
-                </div>
-                 <div class="control-group">
-                    <label>Comment:</label>
-                    <div class="controls">
-                      <textarea rows="10" class="span3", id="comment" name="comment">{% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea>
-                      <button type="button" class="btn btn-link" id="capture" onclick="captureSelection()">Insert Selected Text</button>
-                    </div>
-                  </div>
-                
-
-                <div class="form-actions">
-
-                    <button id="btn-save" type="submit" class="btn btn-primary" size="20">Save</button> {% if next %} <button id="btn-next" type="submit" name="next" class="btn btn-primary" size="20">Save & Next</button> {% endif %}
-                    
-                </div>
-
-            </form>
-
-
-
-  </div>
-  
-        
     </div>
 
+    <div class="card-body row">
+        <div class="col">
+            {% if prev %}
+            <a href="{% url 'document' qId=query.qId docId=prev.document.docId %}" class="btn btn-outline-dark btn-sm">Prev Document</a>
+            {% endif %}
+        </div>
+        <div class="col" align="right">
+            {% if next %}
+            <a href="{% url 'document' qId=query.qId docId=next.document.docId %}" class="btn btn-outline-dark btn-sm">Next Document</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="card text-left m-2">
+    <form class="form-inline" action="{% url 'judge' qId=query.qId docId=document.docId %}" method="post">
+    <div class="row card-body">
+        <div class="col-5">
+        <h6>The relevance of this document</h6>
+        <p>i.e, being a support of the important information in query (target).</p>
+            {% csrf_token %}
+            {% if query.criteria %}
+            Query Description
+            Criteria: {{ query.criteria }}
+            {% endif %}
+
+            <div class="form-check" id="relevance-labels">
+                <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
+                <label class="radio"> Unjudged </label></br>
+                <input type="radio" name="relevance" id="relevance2" value="2" {% if judgement.relevance == 2 %} checked {% endif %}>
+                <label class="radio"> Highly relevant </label></br>
+                <input type="radio" name="relevance" id="relevance1" value="1" {% if judgement.relevance == 1 %} checked {% endif %}>
+                <label class="radio"> Somewhat relevant </label></br>
+                <input type="radio" name="relevance" id="relevance0" value="0" {% if judgement.relevance == 0 %} checked {% endif %}>
+                <label class="radio"> Not relevant </label></br>
+            </div>
+        </div>
+
+        <div class="col-7">
+            <div class="control-group">
+                <script type="text/javascript">
+                  function getSelectedText() {
+                      if (window.getSelection) {
+                          return window.getSelection().toString();
+                      } else if (document.selection) {
+                          return document.selection.createRange().text;
+                      }
+                      return '';
+                  }
+
+                  function captureSelection() {
+                    textarea = document.getElementById('comment');
+                    if (textarea.value=='Comments') {
+                      textarea.value = '';
+                    }
+                    if (textarea.value.length > 0) {
+                      textarea.value = textarea.value + '\n';
+                    }
+                    textarea.value = textarea.value + '"' + getSelectedText() + '"';
+                  }
+
+                  // Keyboard shortcuts for faster judging.
+                  document.addEventListener("DOMContentLoaded", function() {
+                      let btn = {% if next %} document.getElementById("btn-next") {% else %} document.getElementById("btn-save") {% endif %}
+                      let els = document.querySelectorAll("#relevance-labels > label > input");
+                      document.onkeypress = function (e) {
+                          e = e || window.event;
+                          value = e.keyCode - 49
+                          if (value >= 0 && value < els.length) {
+                              els[value].checked = 1
+                              btn.click();
+                          }
+                      };
+                  });
+                </script>
+
+                <h6>The Rationale of relevant reference. </h6>
+                <p>how you select this document (reference) as relevant? Use
+                <button type="button" class="btn btn-warning btn-sm" id="capture" onclick="captureSelection()">highlighter</button>
+                 <div class="control-group">
+                    <div class="controls">
+                      <textarea style="width:100%" id="comment" name="comment">
+                          {% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body row">
+        <div class="col">
+            <div class="form-actions" align="right">
+                <button id="btn-save" type="submit" class="btn btn-outline-primary btn-sm">Save</button> 
+                {% if next %}
+                <button id="btn-next" type="submit" name="next" class="btn btn-outline-primary btn-sm">
+                    Save and Next</button> 
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+</div>
 
 {% endblock %}
