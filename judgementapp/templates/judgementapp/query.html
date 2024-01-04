@@ -29,18 +29,18 @@
            <form class="form-inline" action="" method="post">
               {% csrf_token %}
               <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="difficulty" id="difficulty2" value="2" 
-                  {% if query.difficulty.2 == 1%} checked {% endif %}>
+                  <input class="form-check-input" type="checkbox" name="category" id="category2" value="2" 
+                  {% if query.category.2 == 1%} checked {% endif %}>
                  <label class="form-check-label" for="defaultCheck1">
                      <h6>category 2</h6>
                  </label><br>
-                  <input class="form-check-input" type="checkbox" name="difficulty" id="difficulty1" value="1"
-                  {% if query.difficulty.1 == 1%} checked {% endif %}>
+                  <input class="form-check-input" type="checkbox" name="category" id="category1" value="1"
+                  {% if query.category.1 == 1%} checked {% endif %}>
                  <label class="form-check-label" for="defaultCheck1">
                      <h6>category 1</h6>
                  </label><br>
-                  <input class="form-check-input" type="checkbox" name="difficulty" id="difficulty0" value="0"
-                  {% if query.difficulty.0 == 1%} checked {% endif %}>
+                  <input class="form-check-input" type="checkbox" name="category" id="category0" value="0"
+                  {% if query.category.0 == 1%} checked {% endif %}>
                  <label class="form-check-label" for="defaultCheck1">
                      <h6>category 0</h6>
                  </label>

@@ -38,12 +38,12 @@ def query(request, qId):
     query = Query.objects.get(qId=qId)
     judgements = Judgement.objects.filter(query=query.id)
 
-    if "difficulty" in request.POST:
-        for c in query.difficulty:
-            if c in request.POST.getlist('difficulty'):
-                query.difficulty[c] = 1
+    if "category" in request.POST:
+        for c in query.category:
+            if c in request.POST.getlist('category'):
+                query.category[c] = 1
             else:
-                query.difficulty[c] = 0
+                query.category[c] = 0
 
         if "comment" in request.POST:
             query.comment = request.POST['comment']

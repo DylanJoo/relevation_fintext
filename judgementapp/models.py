@@ -26,7 +26,7 @@ class Query(models.Model):
 	# qId = models.IntegerField()
 	qId = models.CharField(max_length=100)
 	text = models.CharField(max_length=250)
-	difficulty = models.JSONField(default=default_query_categories)
+	category = models.JSONField(default=default_query_categories)
 	comment = models.TextField(blank=True, null=True)
 
 	instructions = models.TextField(blank=True, null=True)
