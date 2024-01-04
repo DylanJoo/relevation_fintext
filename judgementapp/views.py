@@ -141,7 +141,7 @@ def upload(request):
         for query in f:
             qid, txt = query.decode().strip().split("\t", 1)
             qryCount = qryCount + 1
-            query = Query(qId=qid,text=txt)
+            query = Query(qId=qid, text=txt)
             query.save()
         context['queries'] = qryCount
 
@@ -150,14 +150,19 @@ def upload(request):
 
         docCount = 0
         for result in f:
-            qid, z, doc, rank, score, desc = result.decode().strip().split()
+            print(result.decode().strip().split())
+            qid, z, docid, rank, score, desc = result.decode().strip().split()
             docCount = docCount + 1
-            doc = doc.replace('corpus/', '')
+            # docid = docid.replace('corpus/', '')
             
-            document, created = Document.objects.get_or_create(docId=doc)
+            document, created = Document.objects.get_or_create(docId=docid)
             document.text = "TBA"
 
-            query = Query.objects.get(qId=qid)
+            try:
+                query = Query.objects.get(qId=qid)
+            except:
+                print(qid)
+
             document.save()
 
             judgement = Judgement()

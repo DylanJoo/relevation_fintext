@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Document(models.Model):
-	docId = models.CharField(max_length=250)
+	docId = models.CharField(max_length=100)
 	text = models.TextField()
 
 	def __str__(self):
@@ -19,7 +19,8 @@ class Document(models.Model):
 		return content
 
 class Query(models.Model):
-	qId = models.IntegerField()
+	# qId = models.IntegerField()
+	qId = models.CharField(max_length=100)
 	text = models.CharField(max_length=250)
 	difficulty = models.IntegerField(blank=True, null=True)
 	comment = models.TextField(blank=True, null=True)
