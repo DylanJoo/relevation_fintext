@@ -26,20 +26,8 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'index' %}upload">Setup</a>
                 </li>
-                <li><a class="nav-link active" href="{% url 'index' %}about">About</a></li>
+                {# <li><a class="nav-link active" href="{% url 'index' %}about">About</a></li> #}
                 <li><a class="nav-link active" href="{% url 'query_list' %}">Queries</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Others
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="?layout=vertical">Vertical</a></li>
-                        <li><a class="dropdown-item" href="?layout=horizontal">Horizontal</a></li>
-                        <li><a class="dropdown-item" href="?layout=inline">Inline</a></li>
-                        <li><a class="dropdown-item" href="?layout=search">Search</a></li>
-                        <li><a class="dropdown-item" href="?layout=horizontal">Using template</a></li>
-                    </ul>
-                </li>
             </ul>
         </div>
     </div>
@@ -47,19 +35,16 @@
 
 <div class="container">
 
-    {% block content %}Empty page{% endblock %}
+    {% block content %}
+        Empty page
+    {% endblock %}
 
-    <p><hr></p>
-
-    <footer class="row">
-        <div class="span6">
-            <p>relevation - Information Retrieval Relevance Judging System</p>
-        </div>
-        <div class="span6" style="text-align:right">
-            <p>
-                <a href="http://koopman.id.au">Bevan Koopman</a>
-            </p>
-        </div>
+    <footer class="bg-body-tertiary">
+      <div class="container p-2">
+        <p style="text-align:right">Fintext RAG, powered by 
+        <a href="https://github.com/ielab/relevation">Relevation</a>
+        </p>
+      </div>
     </footer>
 
 </div> <!-- container -->
