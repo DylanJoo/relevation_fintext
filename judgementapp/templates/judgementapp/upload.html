@@ -11,6 +11,11 @@
           so that the result can be linked via QueryID.</b>(or the query will have 'NA' value).</br>
       Once the query is fixed, you can upload different result files iteratively. 
       The system will keep the previous data and refresh to a new one.</p>
+      {% if deleted %}
+          <div class="alert alert-danger" role="alert">
+              {{ amount }} unjudged documents are removed, please upload new results.
+          </div>
+      {% endif %}
       {% if uploaded %}
           {% if queries %}
             <div class="alert alert-success" role="alert">
@@ -52,8 +57,22 @@
                   <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Upload</button>
               </div>
           </div>
+          </br>
       </form>
+          <div class="control-group float-end">
+              <div class="container form-label input-group">
+                  <form class="form-horizontal" action="delete" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <button class="btn btn-outline-danger" type="submit" id="inputGroupFileAddon04">Delete unjudged</button>
+                  </form>
+                  <form class="form-horizontal" action="reset" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <button class="btn btn-outline-danger" type="submit" id="inputGroupFileAddon04">Reset</button>
+                  </form>
+              </div>
+          </div>
     </div>
+
 </div>
 
 {% endblock %}

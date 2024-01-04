@@ -132,9 +132,30 @@ def judge(request, qId, docId):
             }) 
 
 
+def reset(request):
+    # remove queries
+    queries = Query.objects.all()
+    n = len(queries)
+    queries.delete()
+
+    return render(request, 'judgementapp/upload.html', {
+        "deleted": False, "amount": n
+    })
+
+def delete(request):
+    # remove results
+    judgements = Judgement.objects.filter(relevance=-1)
+    n = len(judgements)
+    judgements.delete()
+
+    return render(request, 'judgementapp/upload.html', {
+        "deleted": True, "amount": n
+    })
+
 def upload(request):
     context = {}
 
+    print(request)
     if 'queryFile' in request.FILES:
         f = request.FILES['queryFile']
         qryCount = 0
@@ -187,4 +208,4 @@ def upload(request):
         context['judgements'] = judCount
         context['invalid_queries'] = qryCount
 
-        return render(request, 'judgementapp/upload.html', context)
+    return render(request, 'judgementapp/upload.html', context)
