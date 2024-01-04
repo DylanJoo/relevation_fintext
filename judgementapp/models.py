@@ -46,8 +46,8 @@ class Judgement(models.Model):
 
 	labels = {-1: 'Unjudged', 0: 'Not relvant', 1: 'Somewhat relevant', 2:'Highly relevant'}
 
-	query = models.ForeignKey('Query', on_delete=models.CASCADE)
-	document = models.ForeignKey('Document', on_delete=models.CASCADE)
+	query = models.ForeignKey(Query, on_delete=models.CASCADE)
+	document = models.ForeignKey(Document, on_delete=models.CASCADE)
 	comment = models.TextField(blank=True, null=True)
 	relevance = models.IntegerField()
 

@@ -134,44 +134,57 @@ def judge(request, qId, docId):
 
 def upload(request):
     context = {}
+
     if 'queryFile' in request.FILES:
         f = request.FILES['queryFile']
-
         qryCount = 0
         for query in f:
             qid, txt = query.decode().strip().split("\t", 1)
-            qryCount = qryCount + 1
-            query = Query(qId=qid, text=txt)
-            query.save()
+            query, created = Query.objects.get_or_create(qId=qid)
+            if created:
+                query.text = txt
+                query.save()
+                qryCount += 1
+
+        context['uploaded'] = True
         context['queries'] = qryCount
+        return render(request, 'judgementapp/upload.html', context)
 
     if 'resultsFile' in request.FILES:
         f = request.FILES['resultsFile']
-
-        docCount = 0
+        qryCount, docCount, judCount = 0, 0, 0
         for result in f:
-            print(result.decode().strip().split())
             qid, z, docid, rank, score, desc = result.decode().strip().split()
-            docCount = docCount + 1
-            # docid = docid.replace('corpus/', '')
-            
+
+            # check query
+            query, created = Query.objects.get_or_create(qId=qid)
+            if created:
+                query.text = "NA"
+                query.save()
+                qryCount += 1
+
+            # check document
             document, created = Document.objects.get_or_create(docId=docid)
-            document.text = "TBA"
+            if created:
+                document.text = "NA"
+                document.save()
+                docCount += 1
 
-            try:
-                query = Query.objects.get(qId=qid)
-            except:
-                print(qid)
-
-            document.save()
-
-            judgement = Judgement()
-            judgement.query = query
-            judgement.document = document
-            judgement.relevance = -1
-            
-            judgement.save()
+            # check judgement
+            judgement = Judgement.objects.filter(
+                    query=query.id, document=document.id
+            )
+            if len(judgement) == 0:
+                judgement = Judgement()
+                judgement.query = query
+                judgement.document = document
+                judgement.relevance = -1
+                judgement.save()
+                judCount += 1
                 
-        context['results'] = docCount
+        context['uploaded'] = True
+        context['documents'] = docCount
+        context['judgements'] = judCount
+        context['invalid_queries'] = qryCount
 
-    return render(request, 'judgementapp/upload.html', context)
+        return render(request, 'judgementapp/upload.html', context)

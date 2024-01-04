@@ -2,26 +2,18 @@
 
 {% block content %}
 
-    <div class="container">
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h4>Setup</h4>
-                <p>Setup a new relevance judging project by upload your queries and ranked list of document results.</p>
-                <p><a class="btn btn-primary" href="{% url 'index' %}upload">Start setup &raquo;</a></p>
-            </div>
-            <div class="col">
-                <h4>Queries</h4>
-                <p>Take a look at the current queries in the systems and begin judging.</p>
-                <p><a class="btn btn-primary" href="{% url 'query_list' %}">View queries &raquo;</a></p>
-            </div>
-        </div>
-        <div class="row">
-            <p>This system is from <a href="https://github.com/bevankoopman/">Relevation</a>.</p>
-        </div>
-    </div>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Setup Annotation Data</h5>
+    <p class="card-text">Setup a new relevance judging project by upload your queries and ranked list of document results.</p>
+    <a class="btn btn-primary" href="{% url 'index' %}upload">Start setup &raquo;</a>
+  </div>
+    <div class="card-body">
+        <h5 class="card-title">Check Queries and Judgements</h5>
+    <p class="card-text">Take a look at the current queries in the systems and begin judging.</p>
+    <a class="btn btn-primary" href="{% url 'query_list' %}">View queries &raquo;</a>
+  </div>
+</div>
 
 
 {% endblock %}
