@@ -8,6 +8,7 @@ urlpatterns = [
     re_path(r'^$', views.index, name='index'),
     re_path(r'^query$', views.query_list, name='query_list'),
     re_path(r'^query/qrels$', views.qrels, name='qrels'),
+    re_path(r'^query/qlabels$', views.qlabels, name='qlabels'),
     re_path(r'^query/(?P<qId>[A-Za-z0-9_\-\+\.]+)/$', views.query, name='query'),
     re_path(r'^query/(?P<qId>[A-Za-z0-9_\-\+\.]+)/doc/(?P<docId>[A-Za-z0-9_\-\+\.]+)/$', views.document, name='document'),
 	re_path(r'^query/(?P<qId>[A-Za-z0-9_\-\+\.]+)/doc/(?P<docId>[+A-Za-z0-9_\-\+\.]+)/judge/$', views.judge, name='judge'),    

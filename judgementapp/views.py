@@ -23,6 +23,14 @@ def qrels(request):
 
     response = HttpResponse(judgements, content_type='application/force-download')
     response['Content-Disposition'] = 'attachment; filename=qrels.txt'
+    return response
+
+def qlabels(request):
+    # queries = Query.objects.all()
+    queries = Query.objects.exclude(text="NA")
+
+    response = HttpResponse(queries, content_type='application/force-download')
+    response['Content-Disposition'] = 'attachment; filename=qlabels.jsonl'
     #response['X-Sendfile'] = myfile
     # It's usually a good idea to set the 'Content-Length' header too.
     # You can also set any other required headers: Cache-Control, etc.

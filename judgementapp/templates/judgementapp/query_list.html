@@ -7,6 +7,7 @@
         <h5 class="card-title">Queries</h5>
         <p class="card-text">A placeholder for query list.</p>
         {% if queries %}
+        <a href="{% url 'qlabels' %}" class="btn btn-outline-dark">Download Query Assessments (qlabels) &raquo;</a>
         <a href="{% url 'qrels' %}" class="btn btn-outline-dark">Download Relevance Assessments (qrels) &raquo;</a>
         {% endif %}
     </div>

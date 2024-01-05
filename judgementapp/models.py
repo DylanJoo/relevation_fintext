@@ -25,6 +25,13 @@ class Document(models.Model):
 		return content
 
 
+category2label = {
+        "category 0": 0,
+        "category 1": 1,
+        "category 2": 2,
+        "category 3": 3,
+        "category 4": 4,
+}
 def default_query_categories():
     return {str(i): 0 for i in range(10)}
 
@@ -40,7 +47,16 @@ class Query(models.Model):
 	example = models.TextField(blank=True, null=True)
 
 	def __str__(self):
-		return '%s: %s' % (self.qId, self.text)
+		# categories = " ".join(self.category.values())
+		data_dict = {
+                "id": self.qId,
+                "text": self.text,
+                "highlight": self.comment,
+                "categories": self.category,
+		}
+		to_return = json.dumps(data_dict)
+		# return '{%s: %s}'% (self.qId, self.text)
+		return to_return + '\n'
 
 	def num_unjudged_docs(self):
 		unjugded = [judgement for judgement in self.judgements() if judgement.relevance < 0]
