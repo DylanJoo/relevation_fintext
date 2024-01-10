@@ -37,6 +37,26 @@
             <h6>{{ query.text }} </h6>
         </div>
     </div>
+
+    <div class="card-body row">
+        <div class="col" align="right">
+            {% if query.category.0 == 1%} 
+            <button type="button" class="btn btn-secondary btn-sm">Trivial</span>
+            {% endif %}
+            {% if query.category.1 == 1%}
+            <button type="button" class="btn btn-primary btn-sm">Company-specific</span>
+            {% endif %}
+            {% if query.category.2 == 1%}
+            <button type="button" class="btn btn-danger btn-sm">Change/Action</span>
+            {% endif %}
+            {% if query.category.3 == 1%}
+            <button type="button"class="btn btn-warning btn-sm">Reason</span>
+            {% endif %}
+            {% if query.category.4 == 1%}
+            <button type="button" "btn btn-success btn-sm">Redirect</span>
+            {% endif %}
+        </div>
+    </div>
 </div>
 
 <div class="card text-left m-2">
@@ -81,6 +101,7 @@
             Criteria: {{ query.criteria }}
             {% endif %}
 
+            {% if query.category.0 != 1%} {# if it is not a highlight --> not relevant referneces#}
             <div class="form-check" id="relevance-labels">
                 <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
                 <label class="radio"> Unjudged </label></br>
@@ -91,6 +112,7 @@
                 <input type="radio" name="relevance" id="relevance0" value="0" {% if judgement.relevance == 0 %} checked {% endif %}>
                 <label class="radio"> Not relevant </label></br>
             </div>
+            {% endif %}
         </div>
 
         <div class="col-7">
