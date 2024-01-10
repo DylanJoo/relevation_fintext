@@ -18,15 +18,14 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     with open(args.input_jsonl, 'r') as f:
-        for line in tqdm(f):
+        for i, line in tqdm(enumerate(f)):
             data = json.loads(line.strip())
-            docid = data['id']
-            contents = data['contents']
-            metadata = "{} {} {}-{}".format(
-                    data['name'], data['form'],
-                    data['filing_year'], data['filing_month']
-            )
 
-            # save
-            save_document(args.output_dir, docid, contents, metadata)
+            if i == 0:
+                metadata = "{} {} {}".format(data['company_name'], data['form'], data['filing_date'],)
+            else:
+                data.pop('order') # this is not needed
+                docid = data['id']
+                contents = data['paragraph']
+                save_document(args.output_dir, docid, contents, metadata)
 
