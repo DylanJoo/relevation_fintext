@@ -51,9 +51,10 @@ class Query(models.Model):
 	category = models.JSONField(default=default_query_categories)
 	comment = models.TextField(default="", null=True)
 
-	instructions = models.TextField(blank=True, null=True)
-	criteria = models.TextField(blank=True, null=True)
+	# instructions = models.TextField(blank=True, null=True)
+	# criteria = models.TextField(blank=True, null=True)
 	summary = models.TextField(blank=True, null=True)
+	metadata = models.TextField()
 
 	def __str__(self):
 		# categories = " ".join(self.category.values())

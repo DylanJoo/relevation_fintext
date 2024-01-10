@@ -194,6 +194,8 @@ def upload(request):
                 query, created = Query.objects.get_or_create(qId=qid)
                 if created:
                     query.text = txt
+                    query.metadata = txt
+                    query.summary = txt[:256] + "... "
                     query.save()
                     qryCount += 1
         else: # jsonl
@@ -208,27 +210,21 @@ def upload(request):
                 else:
                     qid = data['id']
                     txt = " ".join(data['paragraph'])
-                    summary = txt[:256] + "..."
+                    summary = txt[:256] + "... "
                     metadata.update({'order': data['order']})
-
                     query, created = Query.objects.get_or_create(qId=qid)
 
                     if created:
                         query.text = txt
                         query.summary = summary
+                        query.metadata = "{} {} {} -- #{}".format(
+                                metadata['company_name'],
+                                metadata['form'],
+                                metadata['filing_date'],
+                                metadata['order'],
+                        )
                         query.save()
                         qryCount += 1
-
-        # for i, line in tqdm(enumerate(f)):
-        #     data = json.loads(line.strip())
-        #
-        #     if i == 0:
-        #     else:
-        #         docid = data['id']
-        #         contents = data['paragraph']
-        #         metadata.update({'order': data['order']})
-        #         save_document(args.output_dir, docid, contents, metadata)
-
 
         context['uploaded'] = True
         context['queries'] = qryCount
