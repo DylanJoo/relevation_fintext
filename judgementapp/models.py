@@ -16,8 +16,17 @@ class Document(models.Model):
 			with open(settings.DATA_DIR+"/"+self.docId) as f:
 			    read = f.read()
 			    try:
-			        self.text = json.loads(read)['metadata']
-			        content += json.loads(read)['contents']
+			        metadata = json.loads(read)['metadata']
+			        self.text = "{} {} {} -- #{}".format(
+			                metadata['company_name'],
+			                metadata['form'],
+			                metadata['filing_date'],
+			                metadata['order'],
+			        )
+			        data = json.loads(read)
+			        # for c in data['contents']:
+			        #     print(c)
+			        content = json.loads(read)['contents']
 			    except:
 			        content += read
 		except Exception:
@@ -26,14 +35,14 @@ class Document(models.Model):
 
 
 category2label = {
-        "category 0": 0,
-        "category 1": 1,
-        "category 2": 2,
-        "category 3": 3,
-        "category 4": 4,
+        0: "type_0",
+        1: "type_1",
+        2: "type_2",
+        3: "type_3",
+        4: "type_4",
 }
 def default_query_categories():
-    return {str(i): 0 for i in range(10)}
+    return {str(i): 0 for i in range(4)}
 
 class Query(models.Model):
 	# qId = models.IntegerField()

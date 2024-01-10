@@ -8,6 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from wsgiref.util import FileWrapper
 
 from judgementapp.models import *
+import json
 
 def index(request):
     queries = Query.objects.order_by('qId')
@@ -96,8 +97,7 @@ def document(request, qId, docId):
             {'document': document, 'query': query, 
                 'judgement': judgement, 'next': next, 'prev': prev, 
                 'rank': rank, 'total_rank': judgements.count(), 
-                'content': content.strip()
-            })
+                'content': content})
 
 def judge(request, qId, docId):
     query = get_object_or_404(Query, qId=qId)
@@ -176,7 +176,12 @@ def upload(request):
         f = request.FILES['queryFile']
         qryCount = 0
         for query in f:
-            qid, txt = query.decode().strip().split("\t", 1)
+            if request.FILES['filename'].name.endwith('jsonl'):
+                data = json.loads(query.strip())
+                qid = data['id']
+                txt = "\n".join(data['paragraph'])
+            else:
+                qid, txt = query.decode().strip().split("\t", 1)
             query, created = Query.objects.get_or_create(qId=qid)
             if created:
                 query.text = txt

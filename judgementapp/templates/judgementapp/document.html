@@ -4,20 +4,32 @@
 <div class="card">
 
 <div class="card-body">
-    <h5 class="card-title">Query-document Judgements</h5>
-    <p class="card-text">Here is the guideline.</p>
-    <p>
-    {put the labeling guideline here.}
-    {put the labeling guideline here.}
-    {put the labeling guideline here.}
+    <h5 class="card-title">Task 2 - Reference Retrieval</h5>
+    <p class="card-text">Here is the guideline.
+        This task has two subtasks: (task 1a) span highlighting, and (task 1b) content classification.
+        And below are some annotation instructions. 
+        <h6 class="card-title">General guildline</h6>
+        <ul>
+            <li>Annotators should <b>avoid speculation</b> based on prior knowledge and 
+                should not draw conclusions that require speculation or prior knowledge of the company.</li>
+            <li>Annotators should be as <b>consistent</b> as they can be with respect to their own annotations.</li> 
+        </ul>
+    </p>
+    <p class="card-text">
+        <h6 class="card-title">Detail guildlines</h6>
+        For this task, annotators should access the relevance of reference (i.e., the document in IR). 
+        Follow common IR setting, we adopt the graded labels from 0 to 2.<br/>
+        <ul>
+            <li>Not relevant: the passage is irrelevant to your judgment of highlights</li>
+            <li>Somewhat relevant: the passage is relevant to your judgment of highlights.</li>
+            <li>Highly relevant: the information in the passage can be crucial to your judgment of highlights.</li>
+        </ul>
     </p>
 </div>
 
 <div class="card text-left m-2">
     <div class="row card-body">
-        <div class="col"><h6>QueryID: {{query.qId}} </h6></div>
-        <div class="col"><h6>Company: </h6></div>
-        <div class="col"><h6>Year: </h6></div>
+        <div class="col"><h6>ID: <i>{{query.qId}}</i></h6></div>
     </div>
 
     <div class="card-body row">
@@ -29,14 +41,17 @@
 
 <div class="card text-left m-2">
     <div class="row card-body">
-        <h6>DocumentID: {{ document.docId }} ({{ rank }} out of {{total_rank}}) </h6>
+        <h6>Reference ID: <i>{{ document.docId }}</i> ({{ rank }} / {{total_rank}}) </h6>
     </div>
     <div class="card-body row">
         <div class="col">
             <h6>{{ document.text }} </h6>
+{{end}}</h1>
         </div>
         <div style="height:100; position:relative; overflow-y: scroll;" id='content'>
-          <h6>{{ content }}</h6>
+          {% for c in content %}
+          <h6>{{ c }}<br/></h6>
+          {% endfor %}
         </div>
     </div>
 

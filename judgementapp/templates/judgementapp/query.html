@@ -5,20 +5,43 @@
 <div class="card">
 
 <div class="card-body">
-    <h5 class="card-title">Query Judgements</h5>
-<p class="card-text">Here is the guideline.</p>
-<p>
-{put the labeling guideline here.}
-{put the labeling guideline here.}
-{put the labeling guideline here.}
-</p>
+    <h5 class="card-title">Task 1 - Financial Signal Highlighting</h5>
+    <p class="card-text">
+        This task has two subtasks: (task 1a) span highlighting, and (task 1b) content classification.
+        And below are some annotation instructions. 
+        <h6 class="card-title">General guildline</h6>
+        <ul>
+            <li>Annotators should <b>avoid speculation</b> based on prior knowledge and 
+                should not draw conclusions that require speculation or prior knowledge of the company.</li>
+            <li>Annotators should be as <b>consistent</b> as they can be with respect to their own annotations.</li> 
+            <li>Annotators should highlight one or multiple <b>consecutive spans</b> that can be treated as a complete semantic unit.</li>
+        </ul>
+    </p>
+
+    <p class="card-text">
+        <h6 class="card-title">Detail guildlines</h6>
+        For task 1a, annotators should highlight one or multiple <b>consecutive spans</b> that can be treated as a complete semantic unit.<br/>
+        For task 1b, Annotators should categorize this content into the following few types (i.e., <b>at least one</b>)
+        <ul>
+            <li><span class="text-secondary">Type 0: Trivial information.</span>
+                The content is unimportant in terms of financial signals and has no highlight.</li>
+            <li><span class="text-primary">Type 1: Company-specific knowledge.</span>
+                e.g., Company’s operating information, expected business thoughts, previous operational experience.</li>
+            <li><span class="text-danger">Type 2: Change/Action of financial entities.</span>
+                e.g., Operational disclosure, financial status or YoY comparison. New products, services, business strategies. </li>
+                {# Macroeconomic/industry/related companies factors.</li> #}
+            <li><span class="text-warning">Type 3: Reasoning for such events in this period.</span>
+                e.g., an event is "due to ...". as " ...", the event would change.</li>
+            <li><span class="text-success">Type 4: Redirect messages.</span>
+                The contents is saying that "please refer to ...".
+            </li>
+        </ul>
+    </p>
 </div>
 
 <div class="card text-left m-2">
     <div class="row card-body">
-        <div class="col"><h6>ID: {{query.qId}} </h6></div>
-        <div class="col"><h6>Company: </h6></div>
-        <div class="col"><h6>Year: </h6></div>
+        <div class="col"><h6>ID: <i>{{query.qId}}</i> </h6></div>
     </div>
 
     <form class="form-inline" action="" method="post"> {% csrf_token %}
@@ -28,21 +51,25 @@
         </div>
         <div class="col-2 float-right"> 
               <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="category" id="category2" value="2" 
-                  {% if query.category.2 == 1%} checked {% endif %}>
-                 <label class="form-check-label" for="defaultCheck1">
-                     <h6>category 2</h6>
-                 </label><br>
+                  <input class="form-check-input" type="checkbox" name="category" id="category0" value="0" 
+                  {% if query.category.0 == 1%} checked {% endif %}>
+                  <label class="form-check-label" for="defaultCheck1"><span class="text-secondary">Trivial</span></label>
+                  <br>
                   <input class="form-check-input" type="checkbox" name="category" id="category1" value="1"
                   {% if query.category.1 == 1%} checked {% endif %}>
-                 <label class="form-check-label" for="defaultCheck1">
-                     <h6>category 1</h6>
-                 </label><br>
-                  <input class="form-check-input" type="checkbox" name="category" id="category0" value="0"
-                  {% if query.category.0 == 1%} checked {% endif %}>
-                 <label class="form-check-label" for="defaultCheck1">
-                     <h6>category 0</h6>
-                 </label>
+                  <label class="form-check-label" for="defaultCheck1"><span class="text-primary">Company-specific</span></label>
+                  <br>
+                  <input class="form-check-input" type="checkbox" name="category" id="category2" value="2"
+                  {% if query.category.2 == 1%} checked {% endif %}>
+                  <label class="form-check-label" for="defaultCheck1"><span class="text-danger">Change/Action</span></label>
+                  <br>
+                  <input class="form-check-input" type="checkbox" name="category" id="category3" value="3"
+                  {% if query.category.3 == 1%} checked {% endif %}>
+                  <label class="form-check-label" for="defaultCheck1"><span class="text-warning">Reason</span></label>
+                  <br>
+                  <input class="form-check-input" type="checkbox" name="category" id="category4" value="4"
+                  {% if query.category.4 == 1%} checked {% endif %}>
+                  <label class="form-check-label" for="defaultCheck1"><span class="text-success">Redirect</span></label>
               </div>
         </div>
     </div>

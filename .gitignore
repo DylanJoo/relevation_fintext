@@ -7,4 +7,6 @@ publish.sh
 db/relevation.db
 !documents/put_the_jsonl_file_here
 documents/
+documents_all/
 raw_data/
+.DS_Store

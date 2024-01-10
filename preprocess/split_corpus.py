@@ -24,7 +24,7 @@ if __name__ == '__main__':
             if i == 0:
                 metadata = {'company_name': data['company_name'], 
                             'form': data['form'], 
-                            'filing_date': ['filing_date']}
+                            'filing_date': data['filing_date']}
             else:
                 docid = data['id']
                 contents = data['paragraph']
