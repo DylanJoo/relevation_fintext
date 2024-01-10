@@ -110,6 +110,20 @@
             </div>
         </div>
     </div>
+
+    <div class="card-body row">
+        <div class="col">
+            {% if prev %}
+            <a href="{% url 'query' qId=prev.qId%}" class="btn btn-outline-dark btn-sm">Prev Query</a>
+            {% endif %}
+        </div>
+        <div class="col" align="right">
+            {% if next %}
+            <a href="{% url 'query' qId=next.qId%}" class="btn btn-outline-dark btn-sm">Next Query</a>
+            {% endif %}
+        </div>
+    </div>
+
     </form>
 
 </div>

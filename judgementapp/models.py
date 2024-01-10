@@ -42,7 +42,7 @@ category2label = {
         4: "type_4",
 }
 def default_query_categories():
-    return {str(i): 0 for i in range(4)}
+    return {str(i): 0 for i in range(5)}
 
 class Query(models.Model):
 	# qId = models.IntegerField()
@@ -53,7 +53,7 @@ class Query(models.Model):
 
 	instructions = models.TextField(blank=True, null=True)
 	criteria = models.TextField(blank=True, null=True)
-	example = models.TextField(blank=True, null=True)
+	summary = models.TextField(blank=True, null=True)
 
 	def __str__(self):
 		# categories = " ".join(self.category.values())

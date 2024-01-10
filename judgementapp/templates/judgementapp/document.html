@@ -96,10 +96,10 @@
         <h6>The relevance of this document</h6>
         <p>i.e, being a support of the important information in query (target).</p>
             {% csrf_token %}
-            {% if query.criteria %}
-            Query Description
-            Criteria: {{ query.criteria }}
-            {% endif %}
+            {# {% if query.criteria %} #}
+            {# Query Description #}
+            {# Criteria: {{ query.criteria }} #}
+            {# {% endif %} #}
 
             {% if query.category.0 != 1%} {# if it is not a highlight --> not relevant referneces#}
             <div class="form-check" id="relevance-labels">

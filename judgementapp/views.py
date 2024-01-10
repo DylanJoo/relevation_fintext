@@ -53,18 +53,31 @@ def query(request, qId):
                 query.category[c] = 1
             else:
                 query.category[c] = 0
-    else:
-        for c in query.category:
-            query.category[c] = 0
 
     if "comment" in request.POST:
         query.comment = request.POST['comment'].strip()
 
     query.save()
     query.length = len(query.text)
+    # return render(request, 'judgementapp/query.html', {'query': query, 'judgements': judgements,})
 
-    return render(request, 'judgementapp/query.html', {'query': query, 'judgements': judgements})
+    # navigation
+    prev = None
+    try:
+        prev = Query.objects.get(id=query.id-1)
+    except:
+        pass
 
+    next = None
+    try:
+        next = Query.objects.get(id=query.id+1)
+    except:
+        pass
+
+    return render(request, 'judgementapp/query.html', 
+            {'query': query, 'judgements': judgements, 
+             'prev': prev, 'next': next}
+    )
 
 def document(request, qId, docId):
     document = Document.objects.get(docId=docId)
@@ -175,18 +188,47 @@ def upload(request):
     if 'queryFile' in request.FILES:
         f = request.FILES['queryFile']
         qryCount = 0
-        for query in f:
-            if request.FILES['filename'].name.endwith('jsonl'):
-                data = json.loads(query.strip())
-                qid = data['id']
-                txt = "\n".join(data['paragraph'])
-            else:
+        if request.FILES['queryFile'].name.endswith('txt'):
+            for query in f:
                 qid, txt = query.decode().strip().split("\t", 1)
-            query, created = Query.objects.get_or_create(qId=qid)
-            if created:
-                query.text = txt
-                query.save()
-                qryCount += 1
+                query, created = Query.objects.get_or_create(qId=qid)
+                if created:
+                    query.text = txt
+                    query.save()
+                    qryCount += 1
+        else: # jsonl
+            for i, query in enumerate(f):
+                data = json.loads(query)
+                if i == 0:
+                    metadata = {
+                            'company_name': data['company_name'], 
+                            'form': data['form'], 
+                            'filing_date': data['filing_date']
+                    }
+                else:
+                    qid = data['id']
+                    txt = " ".join(data['paragraph'])
+                    summary = txt[:256] + "..."
+                    metadata.update({'order': data['order']})
+
+                    query, created = Query.objects.get_or_create(qId=qid)
+
+                    if created:
+                        query.text = txt
+                        query.summary = summary
+                        query.save()
+                        qryCount += 1
+
+        # for i, line in tqdm(enumerate(f)):
+        #     data = json.loads(line.strip())
+        #
+        #     if i == 0:
+        #     else:
+        #         docid = data['id']
+        #         contents = data['paragraph']
+        #         metadata.update({'order': data['order']})
+        #         save_document(args.output_dir, docid, contents, metadata)
+
 
         context['uploaded'] = True
         context['queries'] = qryCount
