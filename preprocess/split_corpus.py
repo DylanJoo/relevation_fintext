@@ -22,10 +22,12 @@ if __name__ == '__main__':
             data = json.loads(line.strip())
 
             if i == 0:
-                metadata = "{} {} {}".format(data['company_name'], data['form'], data['filing_date'],)
+                metadata = {'company_name': data['company_name'], 
+                            'form': data['form'], 
+                            'filing_date': ['filing_date']}
             else:
-                data.pop('order') # this is not needed
                 docid = data['id']
                 contents = data['paragraph']
+                metadata.update({'order': data['order']})
                 save_document(args.output_dir, docid, contents, metadata)
 
