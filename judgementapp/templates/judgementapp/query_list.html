@@ -5,7 +5,11 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Queries</h5>
-        {# <p class="card-text">A placeholder for query list.</p> #}
+        <p class="card-text">
+        These are uploaded queries. <br/>
+        The <span style="color: red">field Id is red</span> means the task 1 is unfinished.<br/>
+        The <span style="color: red">field #Unjudeged is red</span> means some retrieved documents are unjudged.
+        </p>
         {% if queries %}
         <a href="{% url 'qlabels' %}" class="btn btn-outline-dark">Download Query Assessments (qlabels) &raquo;</a>
         <a href="{% url 'qrels' %}" class="btn btn-outline-dark">Download Relevance Assessments (qrels) &raquo;</a>
@@ -15,16 +19,18 @@
     <div class="table-responsive m-2">
         <table class="table table-striped">
         <thead style="table-layout:fixed">
-            <tr><th style="width: 20%">Id</th>
+            <tr><th style="width: 18%">Id</th>
                 <th>Text</th>
-                <th style="width: 10%"># Docs</th>
+                <th style="width: 7%"># Docs</th>
                 <th style="width: 10%"># Unjudged</th>
             </tr>
         </thead>
         <tbody>
             {% for query in queries %}
-            <tr><td>{{ query.qId }} </td>
-                <td><a href="{% url 'query' qId=query.qId%}">{{ query.summary }}</a></td>
+            <tr><td><p {% if query.unclassified %} style="color: red" {% endif %}>{{ query.qId }}</p>
+                </td>
+                <td><a href="{% url 'query' qId=query.qId%}">{{ query.summary }}</a>
+                </td>
                 <td>{{ query.num_judgements }}</td>
                 <td {% if query.num_unjudged_docs > 0 %} style="color: red" {% endif %}>{{ query.num_unjudged_docs }}</td>
             </tr>

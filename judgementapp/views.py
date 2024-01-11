@@ -38,16 +38,15 @@ def qlabels(request):
     return response
 
 def query_list(request):
-    queries = Query.objects.order_by('qId')
-
-    # return render('judgementapp/query_list.html', { 'queries': queries}, context_instance=RequestContext(request))
+    # see if we need to add the filter (about the judged)
+    queries = Query.objects.order_by('id')
     return render(request, 'judgementapp/query_list.html', {'queries': queries})
 
 def query(request, qId):
     query = Query.objects.get(qId=qId)
     judgements = Judgement.objects.filter(query=query.id)
 
-    if "category" in request.POST:
+    if "csrfmiddlewaretoken" in request.POST:
         for c in query.category:
             if c in request.POST.getlist('category'):
                 query.category[c] = 1
@@ -98,11 +97,15 @@ def document(request, qId, docId):
     except:
         pass
 
+    next_query = None
     next = None
     try:
         next = Judgement.objects.filter(query=query.id).get(id=judgement.id+1)
     except:
-        pass
+        try:
+            next_query = Query.objects.get(id=query.id+1)
+        except:
+            pass
 
     content = document.get_content()
 
@@ -110,6 +113,7 @@ def document(request, qId, docId):
             {'document': document, 'query': query, 
                 'judgement': judgement, 'next': next, 'prev': prev, 
                 'rank': rank, 'total_rank': judgements.count(), 
+                'next_query': next_query,
                 'content': content})
 
 def judge(request, qId, docId):
@@ -158,7 +162,7 @@ def judge(request, qId, docId):
             {'document': document, 'query': query, 
                 'judgement': judgement, 'next': next, 'prev': prev, 
                 'rank': rank, 'total_rank': judgements.count(), 
-                'content': content.strip()
+                'content': content
             }) 
 
 

@@ -40,7 +40,15 @@
     <div class="card-body">
       <form class="form-horizontal" action="save" method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          <p>Query file with the format --  <b>QueryId [\t] QueryText</b>.</p>
+          <p>Query file with the following two formats 
+          <ul>
+              <li><p><b>tsv</b> file with the format -- <b>QueryId [\t] QueryText</b></p></li>
+              <li><p><b>jsonl</b> file with the format --  <b>1st line is metadata and the other lines are contents.</b></p></li>
+              <div class="box"><pre>
+                  {"form": "{form}", "filing_date": "{date}", "company_name": "{name}"} # first line 
+                  {"id": QueryId, "paragraph": List of QueryText} ...                   # other lines
+              </div></pre>
+          </ul>
           <div class="control-group">
               <div class="container form-label input-group">
                   <label class="form-label" for="queryfile"></label>
@@ -49,7 +57,10 @@
               </div>
           </div>
           </br>
-          <p>Results file with the standard TREC format -- <b>QueryId Q0 DocId Rank Score Description</b>.</p>
+          <p>Results file with the standard TREC format </p>
+          <ul>
+              <li><p><b>TREC run</b> file with the format -- <b>QueryId Q0 DocId Rank Score Description</b>.</p></li>
+          </ul>
           <div class="control-group">
               <div class="container form-label input-group">
                   <label class="control-label" for="resultsfile"></label>

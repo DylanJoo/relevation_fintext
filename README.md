@@ -9,16 +9,14 @@ For efficiency, this system would read the file once a time.
 Thus, only one line of document should be stored in a file; 
 the filename refers to document identified.
 
-- We use the parsed 10K collections, and you can use `split_data.py` to pool your docs.
-- The documents will output in `documents` folder.
+- We use the parsed 10K collections, and you can use `split_corpus.py` to pool your docs.
+- The documents will output in the `documents` folder.
+> The preprocessed data is the raw data from 10-K
 ```
-# documents. (queries can also be splited by this)
-
 for file in raw_data/*/10-K/*jsonl;do
     python3 preprocess/split_data.py \
         --input_jsonl $file \   # the jsonl with entire document.
         --output_dir documents/ # all documents would output here.
-done
 done
 ```
 

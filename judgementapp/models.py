@@ -68,6 +68,9 @@ class Query(models.Model):
 		# return '{%s: %s}'% (self.qId, self.text)
 		return to_return + '\n'
 
+	def unclassified(self):
+		return sum([int(v) for v in self.category.values()]) == 0
+
 	def num_unjudged_docs(self):
 		unjugded = [judgement for judgement in self.judgements() if judgement.relevance < 0]
 		return len(unjugded)

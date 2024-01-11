@@ -95,10 +95,6 @@
         <h6>The relevance of this document</h6>
         <p>i.e, being a support of the important information in query (target).</p>
             {% csrf_token %}
-            {# {% if query.criteria %} #}
-            {# Query Description #}
-            {# Criteria: {{ query.criteria }} #}
-            {# {% endif %} #}
 
             {% if query.category.0 != 1%} {# if it is not a highlight --> not relevant referneces#}
             <div class="form-check" id="relevance-labels">
@@ -164,6 +160,11 @@
     </div>
 
     <div class="card-body row">
+        <div class="col">
+            {% if next_query %}
+                <a href="{% url 'query' qId=next_query.qId%}" class="btn btn-outline-dark btn-sm">Next Query</a>
+            {% endif %}
+        </div>
         <div class="col">
             <div class="form-actions" align="right">
                 <button id="btn-save" type="submit" class="btn btn-outline-primary btn-sm">Save</button> 

@@ -1,0 +1,6 @@
+20181105_10-K_320193_part2_item7_para1 Q0 20181220_10-K_1090872_fin_stats_para1 1 0.3 fintext
+20181105_10-K_320193_part2_item7_para1 Q0 20181220_10-K_1090872_fin_stats_para2 2 0.2 fintext 
+20181105_10-K_320193_part2_item7_para1 Q0 20181220_10-K_1090872_fin_stats_para3 3 0.1 fintext
+20181105_10-K_320193_part2_item7_para2 Q0 20181220_10-K_1090872_fin_stats_para4 1 0.3 fintext
+20181105_10-K_320193_part2_item7_para2 Q0 20181220_10-K_1090872_fin_stats_para5 1 0.2 fintext
+20181105_10-K_320193_part2_item7_para2 Q0 20181220_10-K_1090872_fin_stats_para6 1 0.1 fintext
