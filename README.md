@@ -9,9 +9,8 @@ For efficiency, this system would read the file once a time.
 Thus, only one line of document should be stored in a file; 
 the filename refers to document identified.
 
-- We use the parsed 10K collections, and you can use `split_corpus.py` to pool your docs.
+- We use the parsed 10K collections, and you can use `split_corpus.py` to pool your docs. Please download [here](#) or cfda server:``/home/ythsiao/output``.
 - The documents will output in the `documents` folder.
-> The preprocessed data is the raw data from 10-K
 ```
 for file in raw_data/*/10-K/*jsonl;do
     python3 preprocess/split_data.py \
