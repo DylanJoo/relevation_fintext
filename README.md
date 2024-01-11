@@ -26,8 +26,6 @@ python manage.py runserver
 ```
 
 4. Setup and upload queries and retreived results
-In `testing`, there are exmaple query file and qrel file.
-
-- query file: `testing/qtest.txt`
-- qrel file: `testing/qrels.txt`
-
+See the exampels query and result in this repo.
+- query file: [query.jsonl](example/query.jsonl)
+- result file: [qresult.txt](testing/qresult.txt)
