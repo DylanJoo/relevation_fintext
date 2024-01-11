@@ -7,8 +7,8 @@
         <h5 class="card-title">Queries</h5>
         <p class="card-text">
         These are uploaded queries. <br/>
-        The <span style="color: red">field Id is red</span> means the task 1 is unfinished.<br/>
-        The <span style="color: red">field #Unjudeged is red</span> means some retrieved documents are unjudged.
+        The field <span style="color: red">Id is red</span> means <i>highlighting is unfinished</i>.<br/>
+        The field <span style="color: red">#Unjudeged is red</span> means some the <i>relevance judgement</i> is not completely finished.
         </p>
         {% if queries %}
         <a href="{% url 'qlabels' %}" class="btn btn-outline-dark">Download Query Assessments (qlabels) &raquo;</a>
