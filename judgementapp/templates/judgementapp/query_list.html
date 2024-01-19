@@ -19,7 +19,7 @@
     <div class="table-responsive m-2">
         <table class="table table-striped">
         <thead style="table-layout:fixed">
-            <tr><th style="width: 18%">Id</th>
+            <tr><th style="width: 28%">Id</th>
                 <th>Text</th>
                 <th style="width: 7%"># Docs</th>
                 <th style="width: 10%"># Unjudged</th>
@@ -28,16 +28,33 @@
         <tbody>
             {% for query in queries %}
             <tr><td><p {% if query.unclassified %} style="color: red" {% endif %}>{{ query.qId }}</p>
+                {% if query.category.0 == 1%}<button type="button" class="btn btn-secondary btn-sm">Trivial</button>
+                {% endif %}
+                {% if query.category.1 == 1%}<button type="button" class="btn btn-primary btn-sm">Company-specific</button>
+                {% endif %}
+                {% if query.category.2 == 1%}<button type="button" class="btn btn-danger btn-sm">Change/Action</button>
+                {% endif %}
+                {% if query.category.3 == 1%}<button type="button" class="btn btn-warning btn-sm">Reason</button>
+                {% endif %}
+                {% if query.category.4 == 1%}<button type="button" class="btn btn-success btn-sm">Redirect</button>
+                {% endif %}
                 </td>
                 <td><a href="{% url 'query' qId=query.qId%}">{{ query.summary }}</a>
                 </td>
                 <td>{{ query.num_judgements }}</td>
-                <td 
-                    {% if query.category.0 == 1 %} style="color: green"
-                    {% elif query.num_unjudged_docs > 0 %} style="color: red" 
-                    {% endif %}>
-                    {{ query.num_unjudged_docs }}
-                </td>
+                {% if query.category.0 == 1 %} 
+                    <td style="color: lightgray"><u>{{ query.num_unjudged_docs }}</u></td>
+                {% elif query.num_unjudged_docs > 0 %} 
+                    <td style="color: red" >{{ query.num_unjudged_docs }}</td>
+                {% else %} 
+                    <td>{{ query.num_unjudged_docs }}</td>
+                {% endif %}
+                {# <td  #}
+                {#     {% if query.category.0 == 1 %} style="color: gray" #}
+                {#     {% elif query.num_unjudged_docs > 0 %} style="color: red"  #}
+                {#     {% endif %}> #}
+                {#     {{ query.num_unjudged_docs }} #}
+                {# </td> #}
             </tr>
             {% endfor %}
         </tbody>
