@@ -47,11 +47,24 @@ def query(request, qId):
     judgements = Judgement.objects.filter(query=query.id)
 
     if "csrfmiddlewaretoken" in request.POST:
+        # category
         for c in query.category:
             if c in request.POST.getlist('category'):
                 query.category[c] = 1
             else:
                 query.category[c] = 0
+
+        # topic
+        for t in query.topic:
+            if t in request.POST.getlist('topic'):
+                query.topic[t] = 1
+            else:
+                query.topic[t] = 0
+
+    if 'topic-drop' in request.POST:
+        for t_sub in request.POST.getlist('topic-drop'):
+            t, sub = t_sub.split('-')
+            query.topic[t] = int(sub)
 
     if "comment" in request.POST:
         query.comment = request.POST['comment'].strip()

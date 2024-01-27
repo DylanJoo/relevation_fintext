@@ -6,6 +6,20 @@ from django.db import models
 class Document(models.Model):
 	docId = models.CharField(max_length=100)
 	text = models.TextField()
+	# add document
+
+	def _get_topic(self):
+	    if '_item1_' in self.docId:
+	        return 'Business'
+	    if '_item2_' in self.docId:
+	        return 'Risk'
+	    if '_item3_' in self.docId:
+	        return 'Legal'
+	    if '_item7_' in self.docId:
+	        return 'Operation (uncategorized)'
+	    if '_item8_' in self.docId:
+	        return 'Financial Status'
+	    return 'Others'
 
 	def __str__(self):
 		return self.docId
@@ -44,12 +58,16 @@ category2label = {
 def default_query_categories():
     return {str(i): 0 for i in range(5)}
 
+def default_query_topics():
+    return {str(i): 0 for i in range(7)}
+
 class Query(models.Model):
 	# qId = models.IntegerField()
 	qId = models.CharField(max_length=100)
 	text = models.CharField(max_length=250)
 	category = models.JSONField(default=default_query_categories)
 	comment = models.TextField(default="", null=True)
+	topic = models.JSONField(default=default_query_topics)
 
 	# instructions = models.TextField(blank=True, null=True)
 	# criteria = models.TextField(blank=True, null=True)

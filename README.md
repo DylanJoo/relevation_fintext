@@ -28,3 +28,5 @@ python manage.py runserver
 See the exampels query and result in this repo.
 - query file: [query.jsonl](example/query.jsonl)
 - result file: [qresult.txt](testing/qresult.txt)
+
+The extracted query files of MD&A can be founded in `/home/ythsiao/mda`.

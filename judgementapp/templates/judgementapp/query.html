@@ -44,34 +44,79 @@
         <div class="col"><h6>ID: <i>{{query.qId}}</i> </h6></div>
     </div>
 
+    <div class="card-body row">
+        <h6>{{ query.metadata }} </h6>
+        <h6>{{ query.text }} </h6>
+    </div>
+
     <form class="form-inline" action="" method="post"> {% csrf_token %}
+
     <div class="card-body row">
         <div class="col">
-            <h6>{{ query.metadata }} </h6>
-            <h6>{{ query.text }} </h6>
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+
+                <input type="checkbox" class="btn-check" name="topic" id="topic1" value="1"
+                {% if query.topic.1 == 1%} checked {% endif %}>
+                <label class="btn btn-outline-primary btn-sm" for="topic1">Business</label>
+
+                <input type="checkbox" class="btn-check" name="topic" id="topic2" value="2"
+                {% if query.topic.2 == 1%} checked {% endif %}>
+                <label class="btn btn-outline-primary btn-sm" for="topic2">Risk</label>
+
+                <input type="checkbox" class="btn-check" name="topic" id="topic3" value="3"
+                {% if query.topic.3 == 1%} checked {% endif %}>
+                <label class="btn btn-outline-primary btn-sm" for="topic3">Legal</label>
+
+                <input type="checkbox" class="btn-check" name="topic" id="topic4" value="4"
+                {% if query.topic.4 == 1%} checked {% endif %}>
+                <label class="btn btn-outline-primary btn-sm" for="topic4">Financial Status</label>
+
+                <input type="checkbox" class="btn-check" name="topic" id="topic5" value="5"
+                {% if query.topic.5 == 1%} checked {% endif %}>
+                <label class="btn btn-outline-primary btn-sm" for="topic5">Strategic plan</label>
+
+                <input type="checkbox" class="btn-check" name="topic" id="topic6" value="6"
+                {% if query.topic.6 >= 1%} checked {% endif %}>
+                <label class="btn btn-outline-primary btn-sm" for="topic6">Operational</label>
+
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                </button>
+                <ul class="dropdown-menu">
+                <li><input type="checkbox" class="btn-check" name="topic-drop" id="topic-drop6" value="6-2"
+                    {% if query.topic.5 == 2%} checked {% endif %}>
+                    <label class="btn btn-outline-primary btn-sm" for="topic-drop6">Accounting</label></li>
+                <li><input type="checkbox" class="btn-check" name="topic-drop" id="topic-drop6" value="6-3"
+                    {% if query.topic.5 == 3%} checked {% endif %}>
+                    <label class="btn btn-outline-primary btn-sm" for="topic-drop6">Financial Peformance</label></li>
+                </ul>
+            </div>
         </div>
-        <div class="col-2 float-right"> 
-              <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="category" id="category0" value="0" 
-                  {% if query.category.0 == 1%} checked {% endif %}>
-                  <label class="form-check-label" for="defaultCheck1"><span class="text-secondary">Trivial</span></label>
-                  <br>
-                  <input class="form-check-input" type="checkbox" name="category" id="category1" value="1"
-                  {% if query.category.1 == 1%} checked {% endif %}>
-                  <label class="form-check-label" for="defaultCheck1"><span class="text-primary">Company-specific</span></label>
-                  <br>
-                  <input class="form-check-input" type="checkbox" name="category" id="category2" value="2"
-                  {% if query.category.2 == 1%} checked {% endif %}>
-                  <label class="form-check-label" for="defaultCheck1"><span class="text-danger">Change/Action</span></label>
-                  <br>
-                  <input class="form-check-input" type="checkbox" name="category" id="category3" value="3"
-                  {% if query.category.3 == 1%} checked {% endif %}>
-                  <label class="form-check-label" for="defaultCheck1"><span class="text-warning">Reason</span></label>
-                  <br>
-                  <input class="form-check-input" type="checkbox" name="category" id="category4" value="4"
-                  {% if query.category.4 == 1%} checked {% endif %}>
-                  <label class="form-check-label" for="defaultCheck1"><span class="text-success">Redirect</span></label>
-              </div>
+
+    <div class="card-body row">
+        <div class="col">
+        {# <div class="col-2 float-right">  #}
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                <input class="btn-check" type="radio" name="category" id="category0" value="0"
+                {% if query.category.0 == 1%} checked {% endif %}>
+                <label class="btn btn-outline-secondary btn-sm" for="category0">Trivial</label>
+
+                <input class="btn-check" type="radio" name="category" id="category1" value="1"
+                {% if query.category.1 == 1%} checked {% endif %}>
+                <label class="btn btn-outline-primary btn-sm" for="category1">Company-specific</label>
+
+                <input class="btn-check" type="radio" name="category" id="category2" value="2"
+                {% if query.category.2 == 1%} checked {% endif %}>
+                <label class="btn btn-outline-danger btn-sm" for="category2">change/Action</label>
+
+                <input class="btn-check" type="radio" name="category" id="category3" value="3"
+                {% if query.category.3 == 1%} checked {% endif %}>
+                <label class="btn btn-outline-warning btn-sm" for="category3">Reason</label>
+
+                <input class="btn-check" type="radio" name="category" id="category4" value="4"
+                {% if query.category.4 == 1%} checked {% endif %}>
+                <label class="btn btn-outline-success btn-sm" for="category4">Redirect</label>
+            </div>
         </div>
     </div>
 
@@ -99,12 +144,10 @@
 
             <h6><button type="button" class="btn btn-warning btn-sm" id="capture" onclick="captureSelection()">Span highlighter</button></h6>
             <div class="control-group">
-                {# <div class="controls"> #}
                 <textarea style="width:100%" id="comment" name="comment">{% if query.comment %}{{query.comment}}{% else %}{% endif %}</textarea>
-                {# </div> #}
             </div>
         </div>
-        <div class="col-2 float-right"> 
+        <div class="col-2 float-right align-self-end">
             <div class="form-actions">
                 <button type="submit" class="btn btn-outline-primary btn-sm">Save</button> 
                 <a href="{% url 'query' qId=query.qId %}" class="btn btn-outline-danger btn-sm">Cancel</a>
