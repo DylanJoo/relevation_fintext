@@ -40,85 +40,53 @@
 </div>
 
 <div class="card text-left m-2">
-    <div class="row card-body">
+    <form class="form-inline" action="" method="post"> {% csrf_token %}
+
+    <div class="card-body row">
         <div class="col"><h6>ID: <i>{{query.qId}}</i> </h6></div>
     </div>
 
     <div class="card-body row">
         <h6>{{ query.metadata }} </h6>
         <h6>{{ query.text }} </h6>
-    </div>
 
-    <form class="form-inline" action="" method="post"> {% csrf_token %}
+        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
 
-    <div class="card-body row">
-        <div class="col">
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+            <input type="checkbox" class="btn-check" name="topic" id="topic1" value="1"
+            {% if query.topic.1 == 1%} checked {% endif %}>
+            <label class="btn btn-outline-primary btn-sm" for="topic1">Business (1)</label>
+            <input type="checkbox" class="btn-check" name="topic" id="topic2" value="2"
+            {% if query.topic.2 == 1%} checked {% endif %}>
+            <label class="btn btn-outline-primary btn-sm" for="topic2">Riski (2)</label>
+            <input type="checkbox" class="btn-check" name="topic" id="topic3" value="3"
+            {% if query.topic.3 == 1%} checked {% endif %}>
+            <label class="btn btn-outline-primary btn-sm" for="topic3">Legal (3)</label>
+            <input type="checkbox" class="btn-check" name="topic" id="topic4" value="4"
+            {% if query.topic.4 == 1%} checked {% endif %}>
+            <label class="btn btn-outline-primary btn-sm" for="topic4">Financial Status (8)</label>
+            <input type="checkbox" class="btn-check" name="topic" id="topic5" value="5"
+            {% if query.topic.5 == 1%} checked {% endif %}>
+            <label class="btn btn-outline-primary btn-sm" for="topic5">Strategic plan (7)</label>
+            <input type="checkbox" class="btn-check" name="topic" id="topic6" value="6"
+            {% if query.topic.6 >= 1%} checked {% endif %}>
+            <label class="btn btn-outline-primary btn-sm" for="topic6">Operational (7)</label>
 
-                <input type="checkbox" class="btn-check" name="topic" id="topic1" value="1"
-                {% if query.topic.1 == 1%} checked {% endif %}>
-                <label class="btn btn-outline-primary btn-sm" for="topic1">Business</label>
-
-                <input type="checkbox" class="btn-check" name="topic" id="topic2" value="2"
-                {% if query.topic.2 == 1%} checked {% endif %}>
-                <label class="btn btn-outline-primary btn-sm" for="topic2">Risk</label>
-
-                <input type="checkbox" class="btn-check" name="topic" id="topic3" value="3"
-                {% if query.topic.3 == 1%} checked {% endif %}>
-                <label class="btn btn-outline-primary btn-sm" for="topic3">Legal</label>
-
-                <input type="checkbox" class="btn-check" name="topic" id="topic4" value="4"
-                {% if query.topic.4 == 1%} checked {% endif %}>
-                <label class="btn btn-outline-primary btn-sm" for="topic4">Financial Status</label>
-
-                <input type="checkbox" class="btn-check" name="topic" id="topic5" value="5"
-                {% if query.topic.5 == 1%} checked {% endif %}>
-                <label class="btn btn-outline-primary btn-sm" for="topic5">Strategic plan</label>
-
-                <input type="checkbox" class="btn-check" name="topic" id="topic6" value="6"
-                {% if query.topic.6 >= 1%} checked {% endif %}>
-                <label class="btn btn-outline-primary btn-sm" for="topic6">Operational</label>
-
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" 
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                </button>
-                <ul class="dropdown-menu">
-                <li><input type="checkbox" class="btn-check" name="topic-drop" id="topic-drop6" value="6-2"
-                    {% if query.topic.5 == 2%} checked {% endif %}>
-                    <label class="btn btn-outline-primary btn-sm" for="topic-drop6">Accounting</label></li>
-                <li><input type="checkbox" class="btn-check" name="topic-drop" id="topic-drop6" value="6-3"
-                    {% if query.topic.5 == 3%} checked {% endif %}>
-                    <label class="btn btn-outline-primary btn-sm" for="topic-drop6">Financial Peformance</label></li>
-                </ul>
-            </div>
-        </div>
-
-    <div class="card-body row">
-        <div class="col">
-        {# <div class="col-2 float-right">  #}
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                <input class="btn-check" type="radio" name="category" id="category0" value="0"
-                {% if query.category.0 == 1%} checked {% endif %}>
-                <label class="btn btn-outline-secondary btn-sm" for="category0">Trivial</label>
-
-                <input class="btn-check" type="radio" name="category" id="category1" value="1"
-                {% if query.category.1 == 1%} checked {% endif %}>
-                <label class="btn btn-outline-primary btn-sm" for="category1">Company-specific</label>
-
-                <input class="btn-check" type="radio" name="category" id="category2" value="2"
-                {% if query.category.2 == 1%} checked {% endif %}>
-                <label class="btn btn-outline-danger btn-sm" for="category2">change/Action</label>
-
-                <input class="btn-check" type="radio" name="category" id="category3" value="3"
-                {% if query.category.3 == 1%} checked {% endif %}>
-                <label class="btn btn-outline-warning btn-sm" for="category3">Reason</label>
-
-                <input class="btn-check" type="radio" name="category" id="category4" value="4"
-                {% if query.category.4 == 1%} checked {% endif %}>
-                <label class="btn btn-outline-success btn-sm" for="category4">Redirect</label>
-            </div>
+            {# add dropdown menu for topic6 #}
+            <button class="btn btn-outline-primary dropdown-toggle btm-sm" 
+                data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false" name='topic' id="topic6" value="6">
+            </button>
+            <ul class="dropdown-menu">
+            <li><span class="dropdown-header">Select a possible subtopic if needed </span></li>
+            <li><input type="checkbox" class="btn mx-3 btn-outline" name="topic-drop" id="topic-drop6" value="6-2"
+                {% if query.topic.6 == 2%} checked {% endif %}>
+                <label class="mr-1" for="topic-drop6">Accounting</label></li>
+            <li><input type="checkbox" class="btn mx-3 btn-outline" name="topic-drop" id="topic-drop6" value="6-3"
+                {% if query.topic.6 == 3%} checked {% endif %}>
+                <label class="mr-1" for="topic-drop6">Financial Peformance</label></li>
+            </ul>
         </div>
     </div>
+
 
     <div class="card-body row">
         <div class="col">
@@ -141,19 +109,47 @@
                 }
               }
             </script></div>
-
-            <h6><button type="button" class="btn btn-warning btn-sm" id="capture" onclick="captureSelection()">Span highlighter</button></h6>
+            <h6>The highlights of the target paragraph.</h6>
+            <p>Select consecutive spans via 
+            <button type="button" class="btn btn-warning btn-sm" id="capture" onclick="captureSelection()">Span Highlighter</button>
+            </p>
             <div class="control-group">
-                <textarea style="width:100%" id="comment" name="comment">{% if query.comment %}{{query.comment}}{% else %}{% endif %}</textarea>
+                <textarea style="width:100%" id="comment" name="comment" rows="3" col="40">
+                    {% if query.comment %}{{query.comment}}{% else %}{% endif %}
+                </textarea>
             </div>
         </div>
-        <div class="col-2 float-right align-self-end">
+
+        <div class="col-2 float-right">
+            <h6>Choose one category</h6>
+            <input class="form-check-input" type="radio" name="category" id="category0" value="0"
+            {% if query.category.0 == 1%} active {% endif %}>
+            <label class="form-check-label" for="defaultCheck1"><span class="text-secondary">Trivial</span></label>
+            <br>
+            <input class="form-check-input" type="radio" name="category" id="category1" value="1"
+            {% if query.category.1 == 1%} checked {% endif %}>
+            <label class="form-check-label" for="defaultCheck1"><span class="text-primary">Company-specific</span></label>
+            <br>
+            <input class="form-check-input" type="radio" name="category" id="category2" value="2"
+            {% if query.category.2 == 1%} checked {% endif %}>
+            <label class="form-check-label" for="defaultCheck1"><span class="text-danger">Change/Action</span></label>
+            <br>
+            <input class="form-check-input" type="radio" name="category" id="category3" value="3"
+            {% if query.category.3 == 1%} checked {% endif %}>
+            <label class="form-check-label" for="defaultCheck1"><span class="text-warning">Reason</span></label>
+            <br>
+            <input class="form-check-input" type="radio" name="category" id="category4" value="4"
+            {% if query.category.4 == 1%} checked {% endif %}>
+            <label class="form-check-label" for="defaultCheck1"><span class="text-success">Redirect</span></label>
+        </div>
+        <div class="col-2 align-self-end" align="right">
             <div class="form-actions">
                 <button type="submit" class="btn btn-outline-primary btn-sm">Save</button> 
-                <a href="{% url 'query' qId=query.qId %}" class="btn btn-outline-danger btn-sm">Cancel</a>
+                <button type="submit" name="clear" value="1" class="btn btn-outline-danger btn-sm">Clear</button> 
             </div>
         </div>
     </div>
+
 
     <div class="card-body row">
         <div class="col">
