@@ -1,7 +1,19 @@
-{# Add categoris #}
 {% extends "judgementapp/base.html" %}
 
 {% block content %}
+<style>
+    #summary h6.collapse:not(.show) {
+        height: 0px !important;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;  
+    }
+    #summary h6.collapsing { min-height: 0px !important; }
+    #summary a.collapsed:after  { content: '(show target)'; }
+    #summary a:not(.collapsed):after { content: '(hide target)'; }
+</style>
+
 <div class="card">
 
 <div class="card-body">
@@ -30,17 +42,40 @@
 
 <div class="card text-left m-2">
     <div class="row card-body">
-        <div class="col"><h6>ID: <i>{{query.qId}}</i></h6></div>
+        <h6>Target ID: <i>{{query.qId}}</i></h6>
     </div>
 
     <div class="card-body row">
-        <div class="col">
-            <h6>{{ query.text }} </h6>
+        <div style="height:100; position:relative; overflow-y: scroll;" id='content'>
+            <h6>{{ query.metadata }}</h6>
+            <h6>{{ query.text }}</h6>
+            {# <div id="summary"> #}
+            {#     <a class="btn btn-link btn-sm" data-bs-toggle="collapse" href="#collapseSummary" aria-expanded="false" aria-controls="collapseSummary"> </a> #}
+            {#     <h6 class="card-text collapse" id="collapseSummary">{{ query.text }}</h6> #}
+            {# </div> #}
         </div>
-    </div>
 
-    <div class="card-body row">
-        <div class="col" align="right">
+        <div class="col" align="left">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic checkbox toggle button group">
+                <button class="btn btn-{% if query.topic.1 >= 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Business</button>
+                <button class="btn btn-{% if query.topic.2 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Risk</button>
+                <button class="btn btn-{% if query.topic.3 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Risk</button>
+                <button class="btn btn-{% if query.topic.4 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Financial Status</button>
+                <button class="btn btn-{% if query.topic.5 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Strategic Plan</button>
+                <button class="btn btn-{% if query.topic.6 >= 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Operational</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="card text-left m-2">
+    <div class="row card-body">
+        <h6>Highlights of the Target</h6>
+        <div class="col">
+            <h6>{{ query.comment }}</h6>
+        </div>
+        <div class="col-2" align="right">
             {% if query.category.0 == 1%} 
             <button type="button" class="btn btn-secondary btn-sm">Trivial</button>
             {% endif %}
@@ -60,10 +95,12 @@
     </div>
 </div>
 
+
 <div class="card text-left m-2">
-    <div class="row card-body">
+    <div class="card-body row">
         <h6>Reference ID: <i>{{ document.docId }}</i> ({{ rank }} / {{total_rank}}) </h6>
     </div>
+
     <div class="card-body row">
         <div class="col">
             <h6>{{ document.text }} </h6>
@@ -72,7 +109,17 @@
           {% for c in content %}
           <h6>{{ c }}<br/></h6>
           {% endfor %}
-        {# add button here #}
+        </div>
+        <div class="col" align="left">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic checkbox toggle button group">
+                <button class="btn btn-{% if document.get_topic == 1 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Business</button>
+                <button class="btn btn-{% if document.get_topic == 2 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Risk</button>
+                <button class="btn btn-{% if document.get_topic == 3 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Legal</button>
+                <button class="btn btn-{% if document.get_topic == 4 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Financial Status</button>
+                <button class="btn btn-{% if document.get_topic >= 5 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Strategic Plan</button>
+                <button class="btn btn-{% if document.get_topic >= 5 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Operational</button>
+                <button class="btn btn-{% if document.get_topic == 0 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Others</button>
+            </div>
         </div>
     </div>
 

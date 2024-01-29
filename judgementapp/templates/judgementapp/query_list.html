@@ -20,7 +20,7 @@
         <table class="table table-striped">
         <thead style="table-layout:fixed">
             <tr><th style="width: 28%">Id</th>
-                <th>Text</th>
+                <th style="width: 55%">Text</th>
                 <th style="width: 7%"># Docs</th>
                 <th style="width: 10%"># Unjudged</th>
             </tr>
@@ -39,7 +39,7 @@
                 {% if query.category.4 == 1%}<button type="button" class="btn btn-success btn-sm">Redirect</button>
                 {% endif %}
                 </td>
-                <td><a href="{% url 'query' qId=query.qId%}">{{ query.summary }}</a>
+                <td><a href="{% url 'query' qId=query.qId%}">{{ query.text|truncatechars:256 }}</a>
                 </td>
                 <td>{{ query.num_judgements }}</td>
                 {% if query.category.0 == 1 %} 

@@ -2,24 +2,41 @@ import json
 from django.conf import settings
 from django.db import models
 
+label2topic = {
+        1: "Business",
+        2: "Risk",
+        3: "Legal",
+        4: "Financial Status",
+        5: "Strategic Plan",
+        6: "Operataionl",
+}
+
+label2category = {
+        0: "type_0",
+        1: "type_1",
+        2: "type_2",
+        3: "type_3",
+        4: "type_4",
+}
+
 # Create your models here.
 class Document(models.Model):
 	docId = models.CharField(max_length=100)
 	text = models.TextField()
 	# add document
 
-	def _get_topic(self):
-	    if '_item1_' in self.docId:
-	        return 'Business'
-	    if '_item2_' in self.docId:
-	        return 'Risk'
-	    if '_item3_' in self.docId:
-	        return 'Legal'
-	    if '_item7_' in self.docId:
-	        return 'Operation (uncategorized)'
-	    if '_item8_' in self.docId:
-	        return 'Financial Status'
-	    return 'Others'
+	def get_topic(self):
+	    if '_item1_' in self.docId: # business --> 1
+	        return 1
+	    if '_item2_' in self.docId: # risk --> 2
+	        return 2
+	    if '_item3_' in self.docId: # legal --> 3
+	        return 3
+	    if '_item8_' in self.docId: # financial status --> 8
+	        return 4
+	    if '_item7_' in self.docId: # operation --> 7
+	        return 5
+	    return 0
 
 	def __str__(self):
 		return self.docId
@@ -48,18 +65,11 @@ class Document(models.Model):
 		return content
 
 
-category2label = {
-        0: "type_0",
-        1: "type_1",
-        2: "type_2",
-        3: "type_3",
-        4: "type_4",
-}
 def default_query_categories():
-    return {str(i): 0 for i in range(5)}
+    return {str(i): 0 for i in label2category}
 
 def default_query_topics():
-    return {str(i): 0 for i in range(7)}
+    return {str(i): 0 for i in label2topic}
 
 class Query(models.Model):
 	# qId = models.IntegerField()
@@ -68,11 +78,15 @@ class Query(models.Model):
 	category = models.JSONField(default=default_query_categories)
 	comment = models.TextField(default="", null=True)
 	topic = models.JSONField(default=default_query_topics)
-
-	# instructions = models.TextField(blank=True, null=True)
-	# criteria = models.TextField(blank=True, null=True)
-	summary = models.TextField(blank=True, null=True)
 	metadata = models.TextField()
+
+	def get_topic(self):
+	    to_return = []
+	    for topic, value in self.topic.items():
+	        if value >= 1:
+	            to_return.append(label2topic[int(topic)])
+	    print(to_return)
+	    return to_return
 
 	def __str__(self):
 		# categories = " ".join(self.category.values())

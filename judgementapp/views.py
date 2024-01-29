@@ -77,7 +77,6 @@ def query(request, qId):
         if "comment" in request.POST:
             query.comment = request.POST['comment'].strip()
 
-
     query.save()
     query.length = len(query.text)
 
@@ -149,7 +148,6 @@ def judge(request, qId, docId):
     # if comment != '':
     #     judgement.comment = comment
     judgement.comment = comment
-    # print(judgement.comment)
     judgement.save()
 
 
@@ -220,7 +218,6 @@ def upload(request):
                 if created:
                     query.text = txt
                     query.metadata = txt
-                    query.summary = txt[:256] + "... "
                     query.save()
                     qryCount += 1
         else: # jsonl
@@ -235,13 +232,11 @@ def upload(request):
                 else:
                     qid = data['id']
                     txt = " ".join(data['paragraph'])
-                    summary = txt[:256] + "... "
                     metadata.update({'order': data['order']})
                     query, created = Query.objects.get_or_create(qId=qid)
 
                     if created:
                         query.text = txt
-                        query.summary = summary
                         query.metadata = "{} {} {} -- #{}".format(
                                 metadata['company_name'],
                                 metadata['form'],
