@@ -12,11 +12,11 @@ label2topic = {
 }
 
 label2category = {
-        0: "type_0",
-        1: "type_1",
-        2: "type_2",
-        3: "type_3",
-        4: "type_4",
+        0: "trivial",
+        1: "company-specific",
+        2: "change/action",
+        3: "reason",
+        4: "redirect",
 }
 
 # Create your models here.
@@ -55,8 +55,6 @@ class Document(models.Model):
 			                metadata['order'],
 			        )
 			        data = json.loads(read)
-			        # for c in data['contents']:
-			        #     print(c)
 			        content = json.loads(read)['contents']
 			    except:
 			        content += read
@@ -74,7 +72,7 @@ def default_query_topics():
 class Query(models.Model):
 	# qId = models.IntegerField()
 	qId = models.CharField(max_length=100)
-	text = models.CharField(max_length=250)
+	text = models.CharField(max_length=250, default="NA")
 	category = models.JSONField(default=default_query_categories)
 	comment = models.TextField(default="", null=True)
 	topic = models.JSONField(default=default_query_topics)
@@ -85,7 +83,6 @@ class Query(models.Model):
 	    for topic, value in self.topic.items():
 	        if value >= 1:
 	            to_return.append(label2topic[int(topic)])
-	    print(to_return)
 	    return to_return
 
 	def __str__(self):
@@ -94,7 +91,8 @@ class Query(models.Model):
                 "id": self.qId,
                 "text": self.text,
                 "highlight": self.comment,
-                "categories": self.category,
+                "category": self.category,
+                "topic": self.topic,
 		}
 		to_return = json.dumps(data_dict)
 		# return '{%s: %s}'% (self.qId, self.text)
