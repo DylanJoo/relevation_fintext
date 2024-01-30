@@ -9,7 +9,9 @@ For efficiency, this system would read the file once a time.
 Thus, only one line of document should be stored in a file; 
 the filename refers to document identified.
 
-- We use the parsed 10K collections, and you can use `split_corpus.py` to pool your docs. Please download [here](#) or cfda server:``/home/ythsiao/output``.
+- Regarding the collection (references), we use parsed 10K corpus. 
+Please download [here](#) or cfda server:``/home/ythsiao/output``. 
+Then, you can use `split_corpus.py` to pool the corpus, to meet the reference/document format.
 - The documents will output in the `documents` folder.
 ```
 for file in raw_data/*/10-K/*jsonl;do
@@ -19,14 +21,18 @@ for file in raw_data/*/10-K/*jsonl;do
 done
 ```
 
-3. Start server
+3. Prepare queries (for empirical evaluation)
+All the evauation query are from the paragraphs of MD&A section.
+Please download [here](#) or cfda server: ``/home/ythsiao/mda``.
+
+4. Start server
 ```
 python manage.py runserver
 ```
 
-4. Setup and upload queries and retreived results
-See the exampels query and result in this repo.
-- query file: [query.jsonl](example/query.jsonl)
-- result file: [qresult.txt](testing/qresult.txt)
+5. Upload queries and results and Start server
+See the example query and qresults in this repo: 
+[query.jsonl](example/query.jsonl) and [qresult.txt](testing/qresult.txt).
 
-The extracted query files of MD&A can be founded in `/home/ythsiao/mda`.
+You are good to go now. Once the judgements are done, you can download the judged queries and judged reference-to-target relevance.
+
