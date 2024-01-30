@@ -22,7 +22,20 @@ done
 ```
 
 3. Prepare queries (for empirical evaluation)
-All the evauation query are from the paragraphs of MD&A section.
+The evaluation queries have already been stored in [raw_query](raw_query/): 
+```
+APL/10-K/20201030_10-K_320193.jsonl
+AAPL/10-K/20221028_10-K_320193.jsonl
+HLT/10-K/20200211_10-K_1585689.jsonl
+HLT/10-K/20220216_10-K_1585689.jsonl
+JNJ/10-K/20200218_10-K_200406.jsonl
+JNJ/10-K/20220217_10-K_200406.jsonl
+NVDA/10-K/20200220_10-K_1045810.jsonl
+NVDA/10-K/20220318_10-K_1045810.jsonl
+UPS/10-K/20200220_10-K_1090727.jsonl
+UPS/10-K/20220222_10-K_1090727.jsonl
+```
+All the queries are from MD&A paragraphs. 
 Please download [here](#) or cfda server: ``/home/ythsiao/mda``.
 
 4. Start server

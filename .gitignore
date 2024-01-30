@@ -9,5 +9,5 @@ db/relevation.db
 documents/
 documents_all/
 raw_data/
-raw_query/
+/* raw_query/ */
 .DS_Store
