@@ -11,7 +11,7 @@ blockquote{
     padding: 1em 1em 1em 1em;
     line-height: 1.5;
     position: relative;
-    background: #EDEDED;
+    background: #F8F8F8;
 }
 
 blockquote span{
@@ -20,6 +20,10 @@ blockquote span{
     font-style: normal;
     font-weight: bold;
     padding: 0.5em;
+}
+
+mark {
+    background-color: #FFFF00;
 }
 </style>
 
@@ -60,6 +64,26 @@ function collapse2(btn) {
         <h5 class="card-title">Examples for reference retrieval task</h5>
         <p class="card-text">Setup a new relevance judging project by upload your queries and ranked list of document results.</p>
         <div align='right'><a class="btn btn-outline-danger" href="{{ back_path }}">Go back to document</a></div>
+
+        <p class="card-text">For example, if the annotated highlight is:
+        <blockquote>
+            The Company <mark>intends to increase its dividend on an annual basis</mark>, subject to declaration by the Board of Directors. 
+        </blockquote>
+
+        Below are three examples, including a irrelevant reference and relevant ones.
+        <blockquote>
+            <ol><li><b>Irrelevant</b> reference (label = 0): it has <b>no direct</b> relation to the highlight. 
+                    <ul><li>The retrieved paragraph discusses the foreign exchange rate increase and 
+                            its impact on the company as a macroeconomic risk.</li></ul>
+                </li>
+                <li><b>Relevant</b> reference: it serves as a <b>support</b> for the highlgiht.
+                    <ul><li>The retrieved paragraph provides more information about the explicit amount or growth rate of the dividend.</li></ul>
+                </li>
+                <li><b>Relevant</b> reference: it <b>emphasizes the rarity or contrast</b> of the highlights.
+                    <ul><li>One of the retrieved passages shows the company maintained a zero-dividend policy in the past years.</li></ul>
+                </li>
+            </ol>
+        </blockquote>
 
         {% else %}
         <h5 class="card-title">Examples for financial signal highlighting task</h5>
