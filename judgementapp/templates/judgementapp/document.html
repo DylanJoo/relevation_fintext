@@ -37,6 +37,7 @@
             <li>Somewhat relevant: the passage is relevant to your judgment of highlights.</li>
             <li>Highly relevant: the information in the passage can be crucial to your judgment of highlights.</li>
         </ul>
+        Here are <a href="{{ request.path }}examples">some examples</a> for highlighting tasks.
     </p>
 </div>
 
@@ -49,20 +50,18 @@
         <div style="height:100; position:relative; overflow-y: scroll;" id='content'>
             <h6>{{ query.metadata }}</h6>
             <h6>{{ query.text }}</h6>
-            {# <div id="summary"> #}
-            {#     <a class="btn btn-link btn-sm" data-bs-toggle="collapse" href="#collapseSummary" aria-expanded="false" aria-controls="collapseSummary"> </a> #}
-            {#     <h6 class="card-text collapse" id="collapseSummary">{{ query.text }}</h6> #}
-            {# </div> #}
         </div>
 
         <div class="col" align="left">
-            <div class="btn-group btn-group-sm" role="group" aria-label="Basic checkbox toggle button group">
-                <button class="btn btn-{% if query.topic.1 >= 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Business</button>
-                <button class="btn btn-{% if query.topic.2 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Risk</button>
-                <button class="btn btn-{% if query.topic.3 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Legal</button>
-                <button class="btn btn-{% if query.topic.4 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Financial Status</button>
-                <button class="btn btn-{% if query.topic.5 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Strategic Plan</button>
-                <button class="btn btn-{% if query.topic.6 >= 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Operational</button>
+            <div class="btn-group btn-group-sm" role="group" aria-label="basic checkbox toggle button group">
+                <button class="btn btn-{% if query.topic.1 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>overview</button>
+                <button class="btn btn-{% if query.topic.2 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>industry</button>
+                <button class="btn btn-{% if query.topic.3 >= 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>risk</button>
+                <button class="btn btn-{% if query.topic.4 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>legal</button>
+                <button class="btn btn-{% if query.topic.5 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>financial status</button>
+                <button class="btn btn-{% if query.topic.6 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>strategy</button>
+                <button class="btn btn-{% if query.topic.7 >= 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>operation</button>
+                <button class="btn btn-{% if query.topic.0 == 1%}{% else %}outline-{% endif %}dark btm-sm" disabled>Others</button>
             </div>
         </div>
 
@@ -112,12 +111,13 @@
         </div>
         <div class="col" align="left">
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic checkbox toggle button group">
-                <button class="btn btn-{% if document.get_topic == 1 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Business</button>
-                <button class="btn btn-{% if document.get_topic == 2 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Risk</button>
-                <button class="btn btn-{% if document.get_topic == 3 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Legal</button>
-                <button class="btn btn-{% if document.get_topic == 4 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Financial Status</button>
-                <button class="btn btn-{% if document.get_topic >= 5 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Strategic Plan</button>
-                <button class="btn btn-{% if document.get_topic >= 5 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Operational</button>
+                <button class="btn btn-{% if document.get_topic == 1 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Overview</button>
+                <button class="btn btn-{% if document.get_topic == 2 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Industry</button>
+                <button class="btn btn-{% if document.get_topic == 3 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Risk</button>
+                <button class="btn btn-{% if document.get_topic == 4 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Legal</button>
+                <button class="btn btn-{% if document.get_topic == 5 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Financial Status</button>
+                <button class="btn btn-{% if document.get_topic >= 6 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Strategy</button>
+                <button class="btn btn-{% if document.get_topic >= 6 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Operational</button>
                 <button class="btn btn-{% if document.get_topic == 0 %}{% else %}outline-{% endif %}dark btm-sm" disabled>Others</button>
             </div>
         </div>

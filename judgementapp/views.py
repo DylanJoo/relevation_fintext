@@ -52,20 +52,20 @@ def query(request, qId):
     judgements = Judgement.objects.filter(query=query.id)
 
     if "clear" in request.POST:
-        for c in query.category:
-            query.category[c] = 0
+        for c in query.type:
+            query.type[c] = 0
         for c in query.topic:
             query.topic[c] = 0
         query.comment = ""
 
     else:
         if "csrfmiddlewaretoken" in request.POST:
-            # category
-            for c in query.category:
-                if c in request.POST.getlist('category'):
-                    query.category[c] = 1
+            # type
+            for c in query.type:
+                if c in request.POST.getlist('type'):
+                    query.type[c] = 1
                 else:
-                    query.category[c] = 0
+                    query.type[c] = 0
 
             # topic
             for t in query.topic:

@@ -2,23 +2,6 @@ import json
 from django.conf import settings
 from django.db import models
 
-label2topic = {
-        1: "Business",
-        2: "Risk",
-        3: "Legal",
-        4: "Financial Status",
-        5: "Strategic Plan",
-        6: "Operataionl",
-}
-
-label2category = {
-        0: "trivial",
-        1: "company-specific",
-        2: "change/action",
-        3: "reason",
-        4: "redirect",
-}
-
 # Create your models here.
 class Document(models.Model):
 	docId = models.CharField(max_length=100)
@@ -29,11 +12,11 @@ class Document(models.Model):
 	    if '_item1_' in self.docId: # business --> 1
 	        return 1
 	    if '_item2_' in self.docId: # risk --> 2
-	        return 2
-	    if '_item3_' in self.docId: # legal --> 3
 	        return 3
-	    if '_item8_' in self.docId: # financial status --> 8
+	    if '_item3_' in self.docId: # legal --> 3
 	        return 4
+	    if '_item8_' in self.docId: # financial status --> 8
+	        return 5
 	    if '_item7_' in self.docId: # operation --> 7
 	        return 5
 	    return 0
@@ -62,9 +45,42 @@ class Document(models.Model):
 			content = "Could not read file %s" % settings.DATA_DIR+"/"+self.docId
 		return content
 
+# label2topic = {
+#         1: "Business",
+#         2: "Risk",
+#         3: "Legal",
+#         4: "Financial Status",
+#         5: "Strategic Plan",
+#         6: "Operataionl",
+# }
+
+label2topic = {
+        1: "Overview",
+        2: "Industry",
+        3: "Risk",
+        4: "Legal",
+        5: "Financial Status",
+        6: "Strategy",
+        7: "Operation",
+        0: "Others",
+}
+
+label2subtopic = {
+        '3-1': "Government",
+        '7-1': "Capital",
+        '7-2': "Accounting",
+}
+
+label2type = {
+        0: "trivial",
+        1: "company-specific",
+        2: "change/action",
+        3: "reason",
+        4: "redirect",
+}
 
 def default_query_categories():
-    return {str(i): 0 for i in label2category}
+    return {str(i): 0 for i in label2type}
 
 def default_query_topics():
     return {str(i): 0 for i in label2topic}
@@ -73,7 +89,7 @@ class Query(models.Model):
 	# qId = models.IntegerField()
 	qId = models.CharField(max_length=100)
 	text = models.CharField(max_length=250, default="NA")
-	category = models.JSONField(default=default_query_categories)
+	type = models.JSONField(default=default_query_categories)
 	comment = models.TextField(default="", null=True)
 	topic = models.JSONField(default=default_query_topics)
 	metadata = models.TextField()
@@ -81,17 +97,19 @@ class Query(models.Model):
 	def get_topic(self):
 	    to_return = []
 	    for topic, value in self.topic.items():
-	        if value >= 1:
+	        if value == 1:
+	            to_return.append(label2topic[int(topic)])
+	        if value > 1:
+	            value = f"{topic}-{value}"
 	            to_return.append(label2topic[int(topic)])
 	    return to_return
 
 	def __str__(self):
-		# categories = " ".join(self.category.values())
 		data_dict = {
                 "id": self.qId,
                 "text": self.text,
                 "highlight": self.comment,
-                "category": self.category,
+                "type": self.type,
                 "topic": self.topic,
 		}
 		to_return = json.dumps(data_dict)
@@ -99,7 +117,7 @@ class Query(models.Model):
 		return to_return + '\n'
 
 	def unclassified(self):
-		return sum([int(v) for v in self.category.values()]) == 0
+		return sum([int(v) for v in self.type.values()]) == 0
 
 	def num_unjudged_docs(self):
 		unjugded = [judgement for judgement in self.judgements() if judgement.relevance < 0]

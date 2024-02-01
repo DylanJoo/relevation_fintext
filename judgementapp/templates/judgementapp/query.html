@@ -27,12 +27,12 @@
                 The content is unimportant in terms of financial signals and has no highlight.</li>
             <li><span class="text-primary">Type 1: Company-specific knowledge.</span>
                 e.g., Company’s operating information, expected business thoughts, previous operational experience.</li>
-            <li><span class="text-danger">Type 2: Change/Action of financial entities.</span>
+            <li><span class="text-danger">Type 2: Change or action related to financial entities.</span>
                 e.g., Operational disclosure, financial status or YoY comparison. New products, services, business strategies. </li>
-            <li><span class="text-warning">Type 3: Reasoning for such events in this period.</span>
-                e.g., an event is "due to ...". as " ...", the event would change.</li>
+            <li><span class="text-warning">Type 3: Reasons for events in this period.</span>
+                e.g., Aan event is "due to ...". as " ...", the event would change.</li>
             <li><span class="text-success">Type 4: Redirect messages.</span>
-                The contents is saying that "please refer to ...".
+                The contents is saying that "please refer to ..." or "as discussed in ..."
             </li>
         </ul>
         Here are <a href="{{ request.path }}examples">some examples</a> for highlighting tasks.
@@ -51,59 +51,65 @@
 
         <div class="col" align="left">
         <div class="btn-group btn-group-sm" role="group" aria-label="Basic checkbox toggle button group">
+            {# 1: "Overview", 2: "Industry" #}
+            {# 3: "Risk", 3-1: "Government" #}
+            {# 4: "Legal", 5: "Financial Status", 6: "Strategy" #}
+            {# 7: "Operation" 7-1: "Capital" #}
 
-            {# Business (1) Risk (2) Legal (3) Financial Status (8) Strategic Plan (7) Operataional (7) #}
-            {# topic1 #}
             <input type="checkbox" class="btn-check" name="topic" id="topic1" value="1"
-            {% if query.topic.1 >= 1%} checked {% endif %}>
-            <label class="btn btn-outline-dark btn-sm" for="topic1">Business</label>
-            <button class="btn btn-outline-dark dropdown-toggle btm-sm" 
-                data-bs-toggle="dropdown" aria-expanded="false" name='topic' id="topic1" value="6" checked>
-            </button>
-            <ul class="dropdown-menu">
-            <li><span class="dropdown-header">Select a possible subtopic if needed </span></li>
-            <li><input type="checkbox" class="btn mx-3 btn-outline" name="topic-drop" id="topic-drop6" value="1-2"
-                {% if query.topic.1 == 2%} checked {% endif %}>
-                <label class="mr-1" for="topic-drop6">first option in Business</label></li>
-            <li><input type="checkbox" class="btn mx-3 btn-outline" name="topic-drop" id="topic-drop6" value="1-3"
-                {% if query.topic.1 == 3%} checked {% endif %}>
-                <label class="mr-1" for="topic-drop6">second option in Business</label></li>
-            </ul>
+            {% if query.topic.1 == 1%} checked {% endif %}>
+            <label class="btn btn-outline-dark btn-sm" for="topic1">Overview</label>
 
             <input type="checkbox" class="btn-check" name="topic" id="topic2" value="2"
             {% if query.topic.2 == 1%} checked {% endif %}>
-            <label class="btn btn-outline-dark btn-sm" for="topic2">Risk</label>
-            <input type="checkbox" class="btn-check" name="topic" id="topic3" value="3"
-            {% if query.topic.3 == 1%} checked {% endif %}>
-            <label class="btn btn-outline-dark btn-sm" for="topic3">Legal</label>
-            <input type="checkbox" class="btn-check" name="topic" id="topic4" value="4"
-            {% if query.topic.4 == 1%} checked {% endif %}>
-            <label class="btn btn-outline-dark btn-sm" for="topic4">Financial Status</label>
-            <input type="checkbox" class="btn-check" name="topic" id="topic5" value="5"
-            {% if query.topic.5 == 1%} checked {% endif %}>
-            <label class="btn btn-outline-dark btn-sm" for="topic5">Strategic plan</label>
+            <label class="btn btn-outline-dark btn-sm" for="topic2">Industry</label>
 
-            {# add dropdown menu for topic6 #}
-            <input type="checkbox" class="btn-check" name="topic" id="topic6" value="6"
-            {% if query.topic.6 >= 1%} checked {% endif %}>
-            <label class="btn btn-outline-dark btm-sm btn-sm" for="topic6">Operational</label>
+            <input type="checkbox" class="btn-check" name="topic" id="topic3" value="3"
+            {% if query.topic.3 >= 1%} checked {% endif %}>
+            <label class="btn btn-outline-dark btn-sm" for="topic3">Risk</label>
             <button class="btn btn-outline-dark dropdown-toggle btm-sm" 
-                data-bs-toggle="dropdown" aria-expanded="false" name='topic' id="topic6" value="6">
+                data-bs-toggle="dropdown" aria-expanded="false" name='topic' id="topic1" value="3" checked>
             </button>
             <ul class="dropdown-menu">
             <li><span class="dropdown-header">Select a possible subtopic if needed </span></li>
-            <li><input type="checkbox" class="btn mx-3 btn-outline" name="topic-drop" id="topic-drop6" value="6-2"
-                {% if query.topic.6 == 2%} checked {% endif %}>
-                <label class="mr-1" for="topic-drop6">Accounting</label></li>
-            <li><input type="checkbox" class="btn mx-3 btn-outline" name="topic-drop" id="topic-drop6" value="6-3"
-                {% if query.topic.6 == 3%} checked {% endif %}>
-                <label class="mr-1" for="topic-drop6">Financial Peformance</label></li>
+            <li><input type="checkbox" class="btn mx-3 btn-outline" name="topic-drop" id="topic-drop3" value="3-2"
+                {% if query.topic.3 == 2%} checked {% endif %}>
+                <label class="mr-1" for="topic-drop6">Government</label></li>
             </ul>
-        </div>
-        </div>
 
+            <input type="checkbox" class="btn-check" name="topic" id="topic4" value="4"
+            {% if query.topic.4 == 1%} checked {% endif %}>
+            <label class="btn btn-outline-dark btn-sm" for="topic4">Legal</label>
+            <input type="checkbox" class="btn-check" name="topic" id="topic5" value="5"
+            {% if query.topic.5 == 1%} checked {% endif %}>
+            <label class="btn btn-outline-dark btn-sm" for="topic5">Financial Status</label>
+            <input type="checkbox" class="btn-check" name="topic" id="topic6" value="6"
+            {% if query.topic.6 >= 1%} checked {% endif %}>
+            <label class="btn btn-outline-dark btn-sm" for="topic6">Strategy</label>
+
+            {# add dropdown menu for topic7 #}
+            <input type="checkbox" class="btn-check" name="topic" id="topic7" value="7"
+            {% if query.topic.7 >= 1%} checked {% endif %}>
+            <label class="btn btn-outline-dark btn-sm" for="topic7">Operation</label>
+            <button class="btn btn-outline-dark dropdown-toggle btm-sm" 
+                data-bs-toggle="dropdown" aria-expanded="false" name='topic' id="topic7" value="7">
+            </button>
+            <ul class="dropdown-menu">
+            <li><span class="dropdown-header">Select a possible subtopic if needed </span></li>
+            <li><input type="checkbox" class="btn mx-3 btn-outline" name="topic-drop" id="topic-drop7" value="7-2"
+                {% if query.topic.7 == 2%} checked {% endif %}>
+                <label class="mr-1" for="topic-drop6">Capital</label></li>
+            <li><input type="checkbox" class="btn mx-3 btn-outline" name="topic-drop" id="topic-drop7" value="7-3"
+                {% if query.topic.7 == 3%} checked {% endif %}>
+                <label class="mr-1" for="topic-drop6">Accounting</label></li>
+            </ul>
+
+            <input type="checkbox" class="btn-check" name="topic" id="topic0" value="0"
+            {% if query.topic.0 == 1%} checked {% endif %}>
+            <label class="btn btn-outline-dark btn-sm" for="topic0">Others</label>
+        </div>
+        </div>
     </div>
-
 
     <div class="card-body row">
         <h6>The highlight of this target paragraph:</h6>
@@ -136,25 +142,25 @@
         </div>
 
         <div class="col-2 float-right">
-            <p>Choose one category</p>
-            <input class="form-check-input" type="radio" name="category" id="category0" value="0"
-            {% if query.category.0 == 1%} active {% endif %}>
+            <p>Choose one type</p>
+            <input class="form-check-input" type="radio" name="type" id="type0" value="0"
+            {% if query.type.0 == 1%} active {% endif %}>
             <label class="form-check-label" for="defaultCheck1"><span class="text-secondary">Trivial</span></label>
             <br>
-            <input class="form-check-input" type="radio" name="category" id="category1" value="1"
-            {% if query.category.1 == 1%} checked {% endif %}>
+            <input class="form-check-input" type="radio" name="type" id="type1" value="1"
+            {% if query.type.1 == 1%} checked {% endif %}>
             <label class="form-check-label" for="defaultCheck1"><span class="text-primary">Company-specific</span></label>
             <br>
-            <input class="form-check-input" type="radio" name="category" id="category2" value="2"
-            {% if query.category.2 == 1%} checked {% endif %}>
+            <input class="form-check-input" type="radio" name="type" id="type2" value="2"
+            {% if query.type.2 == 1%} checked {% endif %}>
             <label class="form-check-label" for="defaultCheck1"><span class="text-danger">Change/Action</span></label>
             <br>
-            <input class="form-check-input" type="radio" name="category" id="category3" value="3"
-            {% if query.category.3 == 1%} checked {% endif %}>
+            <input class="form-check-input" type="radio" name="type" id="type3" value="3"
+            {% if query.type.3 == 1%} checked {% endif %}>
             <label class="form-check-label" for="defaultCheck1"><span class="text-warning">Reason</span></label>
             <br>
-            <input class="form-check-input" type="radio" name="category" id="category4" value="4"
-            {% if query.category.4 == 1%} checked {% endif %}>
+            <input class="form-check-input" type="radio" name="type" id="type4" value="4"
+            {% if query.type.4 == 1%} checked {% endif %}>
             <label class="form-check-label" for="defaultCheck1"><span class="text-success">Redirect</span></label>
         </div>
         <div class="col-2 align-self-end" align="right">
