@@ -10,6 +10,11 @@ from wsgiref.util import FileWrapper
 from judgementapp.models import *
 import json
 
+def examples(request, qId=None, docId=None):
+    context = {'back_path': request.path.replace('/examples/', '')}
+    context.update({'is_doc': 'doc' in request.path})
+    return render(request, 'judgementapp/examples.html', context)
+
 def index(request):
     queries = Query.objects.order_by('qId')
     output = ', '.join([q.text for q in queries])

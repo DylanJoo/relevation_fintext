@@ -1,0 +1,201 @@
+{% extends "judgementapp/base.html" %}
+
+{% block content %}
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic);
+
+blockquote{
+    font-size: 0.9em;
+    width: 100%;
+    color: #555555;
+    padding: 1em 1em 1em 1em;
+    line-height: 1.5;
+    position: relative;
+    background: #EDEDED;
+}
+
+blockquote span{
+    display:block;
+    color:#333333;
+    font-style: normal;
+    font-weight: bold;
+    padding: 0.5em;
+}
+</style>
+
+<script>
+function collapse1(btn) {
+    var x = document.getElementById("panel1");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    if (btn.value === "show") {
+        btn.value = "less";
+    } else {
+        btn.value = "show";
+    }
+}
+
+function collapse2(btn) {
+    var x = document.getElementById("panel2");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    if (btn.value === "show") {
+        btn.value = "less";
+    } else {
+        btn.value = "show";
+    }
+}
+</script>
+
+<div class="card">
+
+    <div class="card-body">
+        {% if is_doc %}
+        <h5 class="card-title">Examples for reference retrieval task</h5>
+        <p class="card-text">Setup a new relevance judging project by upload your queries and ranked list of document results.</p>
+        <div align='right'><a class="btn btn-outline-danger" href="{{ back_path }}">Go back to document</a></div>
+
+        {% else %}
+        <h5 class="card-title">Examples for financial signal highlighting task</h5>
+        <div align='right'><a class="btn btn-outline-danger" href="{{ back_path }}">Go back to query</a></div>
+
+        <h6 class="card-title">Type of selected highlights
+            <input type="button" class="btn btn-link btm-sm" value="show" onclick="collapse1(this)">
+        </h6>
+        <div id="panel1" style="display:none">
+            <p class="card-text">
+            Below are some examples of each type of highlight, 
+            we encourage annotators not to be limited to the provided examples but to consider the spans that contain the signals 
+            that are relevant to the financial users as highlights.</p>
+            <blockquote>
+                <span class="text-primary">Type 1: Company-specific knowledge.</span>
+                <ul><li>Company’s operating information, e.g.  In addition to its contractual cash requirements, 
+                        the Company has a share repurchase program authorized by the Board of Directors (the Program).</li>
+                    <li>The company’s expected business thoughts, e.g.  The Company intends to increase its dividend on an annual basis, 
+                        subject to declaration by the Board of Directors.</li>
+                    <li>A note from previous operational experience, e.g.  Net sales can also be affected when consumers and 
+                        distributors anticipate a product introduction.  
+                    <li>The Company continues to believe that focused investments in R&D are critical to its future growth and 
+                        competitive position in the marketplace, and to the development of new and updated products and 
+                        services that are central to the Company's core business strategy.</li></ul></blockquote>
+            <blockquote>
+                <span class="text-danger">Type 2: Change/Action of financial entities.</span>
+                <ul><li>Operational disclosure, e.g.  As of June 25, 2022, the Company's quarterly cash dividend was 0.23 per share </li>
+                    <li>Financial status or YoY comparison, e.g.  Year-over-year Wearables, Home and Accessories net sales increased during the first nine 
+                        months of 2022 due primarily to higher net sales of Apple Watch and AirPods.</li>
+                    <li>Information on new product, e.g.  At the end of the third quarter of 2022, 
+                        the Company introduced an all-new MacBook Air and an updated 13-inch MacBook Pro, both powered by the new Apple M2 chip.</li>
+                    <li>New strategies, e.g.  The Company repurchased 21.7 billion of its common stock and 
+                        paid dividends and dividend equivalents of 3.8 billion during the third quarter of 2022.</li>
+                    <li>Macroeconomic/Industry/Related companies factors that influence the financial status, 
+                        e.g. The weakness in foreign currencies relative to the U.S. dollar had an unfavorable impact on all Products and 
+                        Services net sales during the third quarter of 2021</li></ul></blockquote>
+
+            <blockquote>
+                <span class="text-warning">Type 3: Reasoning for such events in this period.</span>
+                <ul><li>e.g. Year-over-year Americas net sales increased during the first nine months of 2022 
+                    due primarily to higher net sales of iPhone, Services and Wearables, Home and Accessories.</li></ul></blockquote>
+
+            <blockquote>
+                <span class="text-success">Type 4: Redirect messages.</span>
+                <ul><li>The redirect message in the passage, mentioning important signals in other parts.  
+                        - e.g. The Company’s future gross margins can be impacted by a variety of factors, as discussed in Part I, 
+                        Item 1A of the 2021 Form 10-K under the heading Risk Factors</li></ul></blockquote>
+        </div>
+
+        <h6 class="card-title">Topic of paragraph
+            <input type="button" class="btn btn-link btm-sm" value="show" style="display: 'block';" onclick="collapse2(this)">
+        </h6>
+        <div id="panel2" style="display:none">
+            <p class="card-text">Besides highlighting the spans, please choose a topic from a list of categories that 
+            best encapsulate the contents of the paragraph. 
+            Some categories have further sub-categories, which should be selected if they accurately describe the content of the paragraph.</p>
+
+            <blockquote>
+                <span class="text-dark">Overview</span>
+                <p class="card-text">This paragraph outlines the company's business, including its products and services, subsidiaries, and core technology. 
+                It provides a clear and concise picture of the company's operations.  
+                e.g. The automotive segment includes the design, development, manufacturing, sales and 
+                leasing of high-performance fully electric vehicles as well as sales of automotive regulatory credits. </p>
+            </blockquote>
+
+            <blockquote>
+                <span class="text-dark">Industry</span>
+                <p class="card-text">The paragraph describes the status of the industry that the company belongs to, the market it is competing in, 
+                and its competitors. e.g. A significant source of competition comes from companies that 
+                provide or intend to provide GPUs, CPUs, DPUs, embedded SoCs, and other accelerated, AI computing processor products, 
+                and providers of semiconductor-based high-performance interconnect products based on InfiniBand, Ethernet, Fibre Channel and 
+                proprietary technologies.</p>
+            </blockquote>
+
+            <blockquote>
+                <span class="text-dark">Risk</span>
+                The paragraph outlines the risks and uncertainties faced by the company, including those beyond its control, 
+                that may have positive or negative impacts on its status.  e.g. While the Company maintains insurance coverage for 
+                certain types of losses, such insurance coverage may be insufficient to cover all losses that may arise.
+                This category has sub-categories: 
+                <ul><li><span class="text-dark">Government</span>
+                        The paragraph highlights the potential risks arising from the government's policies, tax rules, or regulations.</li></ul>
+            </blockquote>
+
+            <blockquote>
+                <span class="text-dark">Legal</span>
+                The paragraph provides information about significant pending lawsuits or other legal proceedings, other than ordinary litigation. 
+                e.g. Masimo Corporation and Cercacor Laboratories, Inc. (together, “Masimo”) filed a complaint 
+                before the U.S. International Trade Commission (the “ITC”) alleging infringement by the Company of five patents relating 
+                to the functionality of the blood oxygen feature in Apple Watch Series 6 and 7.
+            </blockquote>
+
+            <blockquote><span class="text-dark">Financial Status</span>
+                The paragraph presents data that is consistent with what can be found in notes, financial statements, and Item 8.
+            </blockquote>
+
+            <blockquote><span class="text-dark">Strategy</span>
+                The paragraph provides information about the plans of the company for the future.
+            </blockquote>
+
+            <blockquote>
+                <span class="text-dark">Operation</span>
+                The paragraph presents the past operational or financial results and may offer analysis of their policies.
+                e.g. During fiscal year 2022, our Gaming, Data Center and Professional Visualization market platforms have benefited 
+                from stronger demand as people continue to work, learn, and play from home.  
+                This category has 2 sub-categories: 
+                <ul><li><span class="text-dark">Capital</span>
+                        Provide information on liquidity, capital resources, capital returned to shareholders, dividend policies, 
+                        and mergers and acquisitions. 
+                        <ul><li>e.g. The Company believes its balances of cash, cash equivalents and 
+                                unrestricted marketable securities, which totaled $156.4 billion as of September  24, 2022, along with cash generated by 
+                                ongoing operations and continued access to debt markets, will be sufficient to satisfy its cash requirements and 
+                                capital return program over the next 12 months and beyond.</li>
+                            <li>e.g. In April 2022, the Company announced an increase to its Program authorization from $315 billion to $405 billion and 
+                                raised its quarterly dividend from $0.22 to $0.23 per share beginning in May 2022. 
+                                During 2022, the Company repurchased $90.2 billion of its common stock and paid dividends and 
+                                dividend equivalents of $14.8 billion.</li>
+                            <li>e.g. As of September 24, 2022, the Company was authorized by the Board of Directors to purchase up to $405 billion of 
+                                the Company’s common stock under a share repurchase program most recently announced on April 28, 2022 (the “Program”), 
+                                of which $344.3 billion had been utilized.</li></ul>
+                    </li>
+                    <li><span class="text-dark">Accounting</span>
+                        Provide information about critical accounting judgments, such as estimates and assumptions. 
+                        e.g. As of January 30, 2022, we had a valuation allowance of $907 million related to state and 
+                        certain other deferred tax assets that management determined are not likely to be realized 
+                        due to jurisdictional projections of future taxable income, tax attributes usage limitation by certain jurisdictions, 
+                        and potential utilization limitations of tax attributes acquired as a result of stock ownership changes.</li></ul>
+            </blockquote>
+
+            <blockquote><span class="text-dark">Others</span>
+                    If you find it hard to put the paragraph in one of above category, then choose this. 
+            </blockquote>
+        </div>
+    {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
