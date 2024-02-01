@@ -70,24 +70,27 @@
 
 <div class="card text-left m-2">
     <div class="row card-body">
-        <h6>Highlights of the Target</h6>
+        <h6>Highlights of the Target
+            <a href="{% url 'query' qId=query.qId %}" class="btn btn-link btm-sm">
+            (edit highlight)</a>
+        </h6>
         <div class="col">
             <h6>{{ query.comment }}</h6>
         </div>
         <div class="col-2" align="right">
-            {% if query.category.0 == 1%} 
+            {% if query.type.0 == 1%} 
             <button type="button" class="btn btn-secondary btn-sm">Trivial</button>
             {% endif %}
-            {% if query.category.1 == 1%}
+            {% if query.type.1 == 1%}
             <button type="button" class="btn btn-primary btn-sm">Company-specific</button>
             {% endif %}
-            {% if query.category.2 == 1%}
+            {% if query.type.2 == 1%}
             <button type="button" class="btn btn-danger btn-sm">Change/Action</button>
             {% endif %}
-            {% if query.category.3 == 1%}
+            {% if query.type.3 == 1%}
             <button type="button"class="btn btn-warning btn-sm">Reason</button>
             {% endif %}
-            {% if query.category.4 == 1%}
+            {% if query.type.4 == 1%}
             <button type="button" "btn btn-success btn-sm">Redirect</button>
             {% endif %}
         </div>
@@ -145,7 +148,7 @@
         <p>i.e, being a support of the important information in query (target).</p>
             {% csrf_token %}
 
-            {% if query.category.0 != 1%} {# if it is not a highlight --> not relevant referneces#}
+            {% if query.type.0 != 1%} {# if it is not a highlight --> not relevant referneces#}
             <div class="form-check" id="relevance-labels">
                 <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
                 <label class="radio"> Unjudged </label></br>
@@ -155,6 +158,11 @@
                 <label class="radio"> Somewhat relevant </label></br>
                 <input type="radio" name="relevance" id="relevance0" value="0" {% if judgement.relevance == 0 %} checked {% endif %}>
                 <label class="radio"> Not relevant </label></br>
+            </div>
+            {% else %}
+            <div class="form-check" id="relevance-labels">
+                <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
+                <label class="radio"> Unjudged </label></br>
             </div>
             {% endif %}
         </div>
