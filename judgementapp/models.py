@@ -66,9 +66,9 @@ label2topic = {
 }
 
 label2subtopic = {
-        '3-1': "Government",
-        '7-1': "Capital",
-        '7-2': "Accounting",
+        '3-2': "Government",
+        '7-2': "Capital",
+        '7-3': "Accounting",
 }
 
 label2type = {
