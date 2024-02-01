@@ -79,7 +79,7 @@ label2type = {
         4: "redirect",
 }
 
-def default_query_categories():
+def default_query_types():
     return {str(i): 0 for i in label2type}
 
 def default_query_topics():
@@ -89,7 +89,7 @@ class Query(models.Model):
 	# qId = models.IntegerField()
 	qId = models.CharField(max_length=100)
 	text = models.CharField(max_length=250, default="NA")
-	type = models.JSONField(default=default_query_categories)
+	type = models.JSONField(default=default_query_types)
 	comment = models.TextField(default="", null=True)
 	topic = models.JSONField(default=default_query_topics)
 	metadata = models.TextField()
